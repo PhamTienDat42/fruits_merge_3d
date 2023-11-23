@@ -1,8 +1,8 @@
-using Fruits;
-using Game;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Game;
+using Fruits;
 
 namespace Pools
 {
@@ -50,12 +50,6 @@ namespace Pools
 						break;
 					}
 				}
-
-				//if (!fruitPools[i].gameObject.activeInHierarchy && (i != fruitPools.Count - 1))
-				//{
-				//    isFull = false;
-				//    break;
-				//}
 			}
 
 			if (isFull == true)
@@ -108,19 +102,19 @@ namespace Pools
 		//	}
 		//}
 
-		//public void ReturnFruitToPool(Fruit fruit)
-		//{
-		//	fruit.gameObject.SetActive(false);
-		//}
+		public void ReturnFruitToPool(Fruit fruit)
+		{
+			fruit.gameObject.SetActive(false);
+		}
 
-		//public void ReturnFruitToPoolRandom(Fruit fruit)
-		//{
-		//	var randomFruit = GetRandomFruitPrefab();
-		//	fruit.SpriteRenderer.sprite = randomFruit.GetComponent<SpriteRenderer>().sprite;
-		//	fruit.FruitPoint = randomFruit.FruitPoint;
-		//	fruit.CircleCollider2D.radius = randomFruit.GetComponent<CircleCollider2D>().radius;
-		//	fruit.gameObject.SetActive(false);
-		//}
+		public void ReturnFruitToPoolRandom(Fruit fruit)
+		{
+			var randomFruit = GetRandomFruitPrefab();
+			fruit.MeshRenderer.materials[0] = randomFruit.GetComponent<MeshRenderer>().materials[0];
+			fruit.FruitPoint = randomFruit.FruitPoint;
+			//fruit.sphereCollider.radius = randomFruit.GetComponent<SphereCollider>().radius;
+			fruit.gameObject.SetActive(false);
+		}
 
 		private Fruit GetRandomFruitPrefab()
 		{
