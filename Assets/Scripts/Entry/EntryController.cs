@@ -1,18 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EntryController : MonoBehaviour
+namespace Entry
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public class EntryController : MonoBehaviour
+	{
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	}
 }
