@@ -63,5 +63,10 @@ namespace Pools
 			obj.gameObject.SetActive(false);
 			objectPool.Add(obj);
 		}
+
+		public List<T> GetObjectList()
+		{
+			return objectPool;
+		}
 	}
 }
