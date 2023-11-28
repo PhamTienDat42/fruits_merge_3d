@@ -25,7 +25,7 @@ namespace Pools
 			combinePools = new Dictionary<int, ObjectPool<Fruit>>();
 			for (int i = 1; i <= 9; i++)
 			{
-				ObjectPool<Fruit> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), 1);
+				ObjectPool<Fruit> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), 2);
 				combinePools.Add(i, pool);
 			}
 		}
@@ -40,8 +40,17 @@ namespace Pools
 		public Fruit GetFruitForCombine(int index, Vector3 pos)
 		{
 			ObjectPool<Fruit> combinePool = combinePools[index];
+			int deactiveCount = 0;
 
-			if (combinePool.ObjectCount <= 2)
+			foreach (Fruit fruit in combinePool.GetObjectList())
+			{
+				if (!fruit.gameObject.activeSelf)
+				{
+					deactiveCount++;
+				}
+			}
+
+			if (deactiveCount < 2)
 			{
 				Fruit newObj = Instantiate(combineFruitPrefabs[index - 1]);
 				newObj.gameObject.SetActive(true);
