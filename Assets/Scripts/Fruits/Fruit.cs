@@ -9,7 +9,6 @@ namespace Fruits
 	{
 		[SerializeField] private int fruitPoint;
 		private GameController controller;
-		private FruitPools fruitPools;
 		private GameView gameView;
 		private FruitManager fruitManager;
 
@@ -25,12 +24,13 @@ namespace Fruits
 			fruitManager = fruitManagerObj.GetComponent<FruitManager>();
 		}
 
-		public void InstantiateFruits(FruitPools fruitPools, GameController gameController, GameView gameView)
-		{
-			this.fruitPools = fruitPools;
-			this.controller = gameController;
-			this.gameView = gameView;
-		}
+		//public void InstantiateFruits(FruitPools fruitPools, GameController gameController, GameView gameView)
+		//{
+		//	this.fruitPools = fruitPools;
+		//	this.controller = gameController;
+		//	this.gameView = gameView;
+		//}
+
 		private void OnCollisionEnter(Collision collision)
 		{
 			Fruit otherFruit = collision.gameObject.GetComponent<Fruit>();
