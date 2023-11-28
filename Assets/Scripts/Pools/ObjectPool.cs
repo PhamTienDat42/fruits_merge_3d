@@ -9,13 +9,14 @@ namespace Pools
 		private List<T> objectPool = new();
 		private Func<T> objectFactory;
 
-		public ObjectPool(Func<T> factory, int initialPoolSize)
+		public ObjectPool(Func<T> factory, int initialPoolSize, GameObject parent)
 		{
 			objectFactory = factory;
 
 			for (int i = 0; i < initialPoolSize; i++)
 			{
 				T obj = CreateObject();
+				obj.transform.parent = parent.transform;
 				objectPool.Add(obj);
 			}
 		}
@@ -39,13 +40,7 @@ namespace Pools
 					return obj;
 				}
 			}
-
-			// If all objects are active, create a new one
-			T newObj = CreateObject();
-			newObj.gameObject.SetActive(true);
-			newObj.transform.position = position;
-			objectPool.Add(newObj);
-			return newObj;
+			return null;
 		}
 
 		public void ReturnObjectToPool(T obj)
