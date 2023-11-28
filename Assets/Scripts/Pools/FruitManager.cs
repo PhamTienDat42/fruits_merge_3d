@@ -8,24 +8,27 @@ namespace Pools
 	{
 		[SerializeField] private List<Fruit> fruitPrefabs;
 		[SerializeField] private List<Fruit> combineFruitPrefabs;
-		[SerializeField] private int poolSizePerType = 10;
+		//[SerializeField] private int poolSizePerType = 10;
 
 		private Dictionary<int, ObjectPool<Fruit>> fruitPools;
 		private Dictionary<int, ObjectPool<Fruit>> combinePools;
+
+		private int poolSizeForCombinePool = 10;
+		private int poolSizeForDrag = 1;
 
 		private void Awake()
 		{
 			fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
 			for (int i = 1; i <= 9; i++)
 			{
-				ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i-1]), 1);
+				ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i-1]), poolSizeForDrag);
 				fruitPools.Add(i, pool);
 			}
 
 			combinePools = new Dictionary<int, ObjectPool<Fruit>>();
 			for (int i = 1; i <= 9; i++)
 			{
-				ObjectPool<Fruit> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), 2);
+				ObjectPool<Fruit> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), poolSizeForCombinePool);
 				combinePools.Add(i, pool);
 			}
 		}
