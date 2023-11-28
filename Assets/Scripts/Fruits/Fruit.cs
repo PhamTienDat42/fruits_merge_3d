@@ -11,16 +11,18 @@ namespace Fruits
 		private GameController controller;
 		private FruitPools fruitPools;
 		private GameView gameView;
-		private MeshRenderer meshRenderer;
-		private new SphereCollider collider;
+		private FruitManager fruitManager;
+
 		private Rigidbody rb;
 		private Vector2 velocity;
 
+		private const string FruitManagerTag = "FruitManager";
+
 		private void Start()
 		{
-			meshRenderer = GetComponent<MeshRenderer>();
 			rb = GetComponent<Rigidbody>();
-			collider = GetComponent<SphereCollider>();
+			var fruitManagerObj = GameObject.FindGameObjectWithTag(FruitManagerTag);
+			fruitManager = fruitManagerObj.GetComponent<FruitManager>();
 		}
 
 		public void InstantiateFruits(FruitPools fruitPools, GameController gameController, GameView gameView)
@@ -37,7 +39,7 @@ namespace Fruits
 			{
 				if (CanCombine(otherFruit))
 				{
-					CombineObjects(otherFruit);
+					CombineFruit(otherFruit);
 				}
 			}
 		}
@@ -47,63 +49,30 @@ namespace Fruits
 			return fruitPoint == otherFruit.fruitPoint;
 		}
 
-		public void SpawnNewFruit(int newPoints, Vector3 pos, Vector2 velocity)
-		{
-			Fruit newFruit = fruitPools.GetFruitFromPoolNew(pos);
-			newFruit.fruitPoint = newPoints;
-			//newFruit.GetComponent<MeshRenderer>().sprite = controller.FruitSprites[(newPoints - 1) % 9];
-			//float spriteRadius = newFruit.GetComponent<MeshRenderer>().material.bounds.size.x / 2f;
-			//newFruit.GetComponent<SphereCollider>().radius = spriteRadius;
-			newFruit.GetComponent<Rigidbody>().velocity = velocity;
-			//newFruit.GetComponent<Rigidbody>().gravityScale = 1.0f;
-			if (Math.Abs(velocity.y) < 0.5f && Math.Abs(velocity.x) < 0.1f)
-			{
-				newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
-			}
-			newFruit.gameObject.SetActive(true);
-		}
-
-		private void CombineObjects(Fruit otherFruit)
+		private void CombineFruit(Fruit otherFruit)
 		{
 			Fruit higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
-			velocity = (transform.position.y > otherFruit.transform.position.y) ? this.rb.velocity : otherFruit.gameObject.GetComponent<Rigidbody>().velocity;
+			var newVelocity =higherFruit.gameObject.GetComponent<Rigidbody>().velocity;
+			Vector3 newFruitPos = higherFruit.transform.position;
+			var newPoints = fruitPoint + 1;
 
 			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
 			{
 				return;
 			}
-			//controller.Model.CurrentScore += fruitPoint;
-			//var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
-			//if (controller.Model.CurrentScore > highScore)
-			//{
-			//	highScore = controller.Model.CurrentScore;
-			//	controller.Model.SetHighScore(highScore);
-			//}
-			//gameView.SetScore();
 
-			var newPoints = fruitPoint + 1;
-			fruitPools.ReturnFruitToPoolRandom(this);
-			fruitPools.ReturnFruitToPoolRandom(otherFruit);
+			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			this.gameObject.SetActive(false);
+			otherFruit.gameObject.SetActive(false);
 
-			//if (newPoints == Constants.MaxPoint)
-			//{
-			//	controller.Model.SetWatermelonCount();
-			//	gameView.SetWatermelonCount();
-			//}
-			//else
-			//{
-			//	SpawnNewFruit(newPoints, higherFruit.transform.position, velocity / 2f);
-			//}
-			SpawnNewFruit(newPoints, higherFruit.transform.position, velocity / 2f);
-
-			transform.localPosition = otherFruit.gameObject.transform.localPosition = Vector3.zero;
-			transform.localRotation = otherFruit.gameObject.transform.localRotation = Quaternion.identity;
-			//rb.gravityScale = otherFruit.GetComponent<Rigidbody2D>().gravityScale = 0.0f;
+			Fruit newFruit = fruitManager.GetFruitForCombine(newPoints, newFruitPos);
+			newFruit.GetComponent<Rigidbody>().velocity = newVelocity;
+			if (Math.Abs(newVelocity.y) < 0.5f && Math.Abs(newVelocity.x) < 0.1f)
+			{
+				newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
+			}
 		}
 
 		public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
-		public Rigidbody Rb => rb;
-		public MeshRenderer MeshRenderer { get => meshRenderer; set => meshRenderer = value; }
-		public SphereCollider sphereCollider { get => collider; set => collider = value; }
 	}
 }
