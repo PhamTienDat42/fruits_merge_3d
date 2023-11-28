@@ -63,7 +63,7 @@ namespace Game
 				var newPosX = Random.Range(-2f, 2f);
 				var newPos = new Vector3(newPosX, startPos.y, 0f);
 				nextFruit.gameObject.SetActive(false);
-				fruitManager.GetFruitForDrag(nextFruit.FruitPoint, newPos);
+				fruitManager.GetFruitForDrop(nextFruit.FruitPoint, newPos);
 				nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			}
 		}
@@ -83,7 +83,7 @@ namespace Game
 		{
 			isClickable = false;
 			nextFruit.gameObject.SetActive(false);
-			fruitManager.GetFruitForDrag(nextFruit.FruitPoint, pos);
+			fruitManager.GetFruitForDrop(nextFruit.FruitPoint, pos);
 			yield return new WaitForSeconds(1.5f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			isClickable = true;
