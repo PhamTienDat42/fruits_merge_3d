@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Game;
 using Pools;
 using UnityEngine;
@@ -13,7 +14,6 @@ namespace Fruits
 		private FruitManager fruitManager;
 
 		private Rigidbody rb;
-		private Vector2 velocity;
 
 		private const string FruitManagerTag = "FruitManager";
 
@@ -65,12 +65,17 @@ namespace Fruits
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
 
+			if(fruitPoint == 9)
+			{
+				return;
+			}
+
 			Fruit newFruit = fruitManager.GetFruitForCombine(newPoints, newFruitPos);
 			newFruit.GetComponent<Rigidbody>().velocity = newVelocity;
-			if (Math.Abs(newVelocity.y) < 0.5f && Math.Abs(newVelocity.x) < 0.1f)
-			{
-				newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
-			}
+			//if (Math.Abs(newVelocity.y) < 0.5f && Math.Abs(newVelocity.x) < 0.1f)
+			//{
+			//	newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
+			//}
 		}
 
 		public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
