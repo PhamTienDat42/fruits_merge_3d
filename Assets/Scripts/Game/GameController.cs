@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pools;
+using Services;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -23,9 +25,22 @@ namespace Game
 		private Fruits.Fruit nextFruit;
 
 		private bool isDrag = false;
+		public GameServices GameServices { get; set; }
+		//private ParamServices paramServices;
 
 		private void Awake()
 		{
+			var gameServiceObj = GameObject.FindGameObjectWithTag(Constants.ServicesTag);
+			if (gameServiceObj != null)
+			{
+				GameServices = gameServiceObj.GetComponent<GameServices>();
+				//paramServices = GameServices.GetService<ParamServices>();
+			}
+			else
+			{
+				SceneManager.LoadScene(Constants.HomeScene);
+			}
+
 			Application.targetFrameRate = 60;
 		}
 
@@ -94,7 +109,7 @@ namespace Game
 		{
 			float screenHeight = mainCamera.orthographicSize * 2f;
 			float screenWidth = screenHeight * mainCamera.aspect;
-			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight/2f - 100.0f*fruitMesh[^1].bounds.size.y, 0f));
+			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight/2f - 2f*100.0f*fruitMesh[^1].bounds.size.y, 0f));
 			SetBoundPosition2D(leftCollider, new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f));
 			SetBoundPosition2D(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
 		}
