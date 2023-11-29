@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Fruits;
+using Game;
 using UnityEngine;
 
 namespace Pools
@@ -11,6 +12,10 @@ namespace Pools
 		[SerializeField] private List<Fruit2D> combineFruitPrefabs;
 		[SerializeField] private GameObject parentFruitPools;
 		[SerializeField] private GameObject parentFruitCombinePools;
+
+		[SerializeField] private GameController gameController;
+		[SerializeField] private GameView gameView;
+		[SerializeField] private GameModel gameModel;
 
 		private Dictionary<int, ObjectPool<Fruit>> fruitPools;
 		private Dictionary<int, ObjectPool<Fruit2D>> combinePools;
@@ -28,16 +33,29 @@ namespace Pools
 			}
 
 			combinePools = new Dictionary<int, ObjectPool<Fruit2D>>();
+			//for (int i = 1; i <= 9; i++)
+			//{
+			//	ObjectPool<Fruit2D> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), poolSizeForCombinePool, parentFruitCombinePools);
+			//	combinePools.Add(i, pool);
+			//}
+
 			for (int i = 1; i <= 9; i++)
 			{
-				ObjectPool<Fruit2D> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), poolSizeForCombinePool, parentFruitCombinePools);
-				combinePools.Add(i, pool);
+				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i-1), poolSizeForCombinePool, parentFruitCombinePools);
+				combinePools.Add(i, objectPool);
 			}
+		}
+
+		private Fruit2D DIFruit(int index)
+		{
+			Fruit2D fruit = Instantiate(combineFruitPrefabs[index]);
+			fruit.InstantiateFruits(this, gameController, gameView, gameModel);
+			return fruit;
 		}
 
 		public Fruit GetNewFruitForShow(Vector3 pos)
 		{
-			int randomPoints = UnityEngine.Random.Range(1, 6);
+			int randomPoints = Random.Range(1, 6);
 			Fruit newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}
@@ -58,7 +76,7 @@ namespace Pools
 			if (deactiveCount < 2)
 			{
 				Fruit2D newObj = Instantiate(combineFruitPrefabs[index - 1], parentFruitCombinePools.transform);
-				newObj.gameObject.SetActive(true);
+				newObj.InstantiateFruits(this, gameController, gameView, gameModel);
 				newObj.transform.position = pos;
 				combinePool.AddToPool(newObj);
 			}
@@ -78,7 +96,7 @@ namespace Pools
 			Quaternion startRot = fruitTransform.localRotation;
 			Quaternion endRot = Quaternion.Euler(randomX, randomY, 0.0f);
 
-			while(t < duration)
+			while (t < duration)
 			{
 				fruitTransform.localRotation = Quaternion.Lerp(startRot, endRot, t / duration);
 				t += Time.deltaTime;
