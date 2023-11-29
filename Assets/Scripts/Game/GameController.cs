@@ -10,6 +10,7 @@ namespace Game
 		[SerializeField] private List<Mesh> fruitMesh;
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private FruitManager fruitManager;
+		[SerializeField] private GameModel gameModel;
 
 		[Space(8.0f)]
 		[Header("Bound-Collider2D")]
@@ -33,7 +34,6 @@ namespace Game
 			isClickable = true;
 
 			var startY = mainCamera.orthographicSize - fruitMesh[^1].bounds.size.y*100.0f;
-			Logger.Debug(startY);
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
@@ -57,6 +57,7 @@ namespace Game
 
 		private IEnumerator DropFruitEverySecond()
 		{
+			Time.timeScale = 2.0f;
 			while (isDrag)
 			{
 				yield return new WaitForSeconds(1.0f);
