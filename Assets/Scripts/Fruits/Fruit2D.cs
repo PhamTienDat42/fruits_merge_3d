@@ -7,6 +7,7 @@ namespace Fruits
 	public class Fruit2D : MonoBehaviour
 	{
 		[SerializeField] private int fruitPoint;
+		[SerializeField] private int index;
 
 		private GameController gameController;
 		private GameView gameView;
@@ -50,7 +51,7 @@ namespace Fruits
 			Fruit2D higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
 			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
 			Vector3 newFruitPos = higherFruit.transform.position;
-			var newPoints = fruitPoint + 1;
+			var newIndex = index + 1;
 
 			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
 			{
@@ -65,12 +66,12 @@ namespace Fruits
 			gameModel.CurrentScore += fruitPoint;
 			gameView.UpdateCurrentScore();
 
-			if (fruitPoint == 9)
+			if (index == Constants.FruitTypeCount)
 			{
 				return;
 			}
 
-			Fruit2D newFruit = fruitManager.GetFruitForDrop(newPoints, newFruitPos);
+			Fruit2D newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
 			newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
 			//if (Math.Abs(newVelocity.y) < 0.5f && Math.Abs(newVelocity.x) < 0.1f)
 			//{
