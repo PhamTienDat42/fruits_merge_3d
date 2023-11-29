@@ -5,6 +5,7 @@ using Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using Services;
 
 namespace SettingPopup
 {
@@ -14,15 +15,16 @@ namespace SettingPopup
         //[SerializeField] private TMP_Text watermelonCountTMP;
         [SerializeField] private TMP_Text confirmButtonTMP;
 
-        private GameModel model;
+        private ParamServices paramServices;
         private event Action OnConfirmButtonClicked;
 
         private void Awake()
         {
-            var modelObj = GameObject.FindGameObjectWithTag("GameModel");
-            if (modelObj != null)
+            var gameServiceObj = GameObject.FindGameObjectWithTag(Constants.ServicesTag);
+            if (gameServiceObj != null)
             {
-                model = modelObj.GetComponent<GameModel>();
+                var gameServices = gameServiceObj.GetComponent<GameServices>();
+				paramServices = gameServices.GetService<ParamServices>();
             }
             else
             {
@@ -35,7 +37,7 @@ namespace SettingPopup
              //highScoreTMP.text = PlayerPrefs.GetInt(Constants.HighScore, 0).ToString();
              //watermelonCountTMP.text = PlayerPrefs.GetInt(Constants.WatermelonCount, 0).ToString();
 
-            if(model.PopupTypeParam == PopupType.SettingPopup)
+            if(paramServices.PopupTypeParam == PopupType.SettingPopup)
             {
                 OnConfirmButtonClicked = OnContinueButtonClick;
                 confirmButtonTMP.text = "Continue";

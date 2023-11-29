@@ -7,7 +7,7 @@ namespace GamePlay
     public class CollisionCheckGameOver : MonoBehaviour
     {
         [SerializeField] private GameController controller;
-		[SerializeField] private GameObject gameOverPopup;
+		[SerializeField] private GameView gameView;
 
         private bool isColliding = false;
         private readonly float collisionDuration = 3f;
@@ -37,11 +37,9 @@ namespace GamePlay
 			{
 				if (Time.time - startTime > collisionDuration)
 				{
-					//controller.NextFruit.gameObject.SetActive(false);
-					//controller.IsClickable = false;
-					//StartCoroutine(fruitPools.ReturnActiveFruitsAndScoreWithDelay(0.25f));
-					gameOverPopup.SetActive(true);
-					yield return new WaitForSeconds(1.0f);
+					Logger.Debug("GameOverrrrrrrrrrrrr");
+					gameView.ShowGameOverPopup();
+					//yield return new WaitForSeconds(1.0f);
 					yield break;
 				}
 				yield return null;
