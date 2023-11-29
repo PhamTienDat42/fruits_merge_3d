@@ -6,7 +6,12 @@ public class Constants
 
 	//Tags
 	public const string ServicesTag = "Services";
+	public const string FruitTag = "Fruit";
 
 	//Nums
 	public const int TargetFrameRate = 60;
+
+	//Score
+	public const string HighScore = "hscr";
+	public const string WatermelonCount = "wtc";
 }
