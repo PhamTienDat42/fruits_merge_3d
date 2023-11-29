@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Pools;
 using Services;
 using UnityEngine;
@@ -9,7 +8,9 @@ namespace Game
 {
 	public class GameController : MonoBehaviour
 	{
-		[SerializeField] private List<Mesh> fruitMesh;
+		[SerializeField] private Mesh fruitMesh;
+		[SerializeField] private Transform fruitForDistanceTransform;
+
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private FruitManager fruitManager;
 		[SerializeField] private GameModel gameModel;
@@ -38,7 +39,7 @@ namespace Game
 			}
 			else
 			{
-				SceneManager.LoadScene(Constants.HomeScene);
+				SceneManager.LoadScene(Constants.EntryScene);
 			}
 
 			Application.targetFrameRate = 60;
@@ -48,7 +49,7 @@ namespace Game
 		{
 			isClickable = true;
 
-			var startY = mainCamera.orthographicSize - fruitMesh[^1].bounds.size.y*100.0f;
+			var startY = mainCamera.orthographicSize - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x / 1.5f;
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
@@ -57,7 +58,7 @@ namespace Game
 		private void Update()
 		{
 			//Game
-			//DragFruits();
+			DragFruits();
 		}
 
 		private void DragFruits()
@@ -109,7 +110,7 @@ namespace Game
 		{
 			float screenHeight = mainCamera.orthographicSize * 2f;
 			float screenWidth = screenHeight * mainCamera.aspect;
-			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight/2f - 2f*100.0f*fruitMesh[^1].bounds.size.y, 0f));
+			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight / 2f - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x, 0f));
 			SetBoundPosition2D(leftCollider, new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f));
 			SetBoundPosition2D(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
 		}
