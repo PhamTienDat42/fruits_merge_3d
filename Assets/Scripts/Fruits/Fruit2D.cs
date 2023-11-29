@@ -1,3 +1,4 @@
+using System.Collections;
 using Game;
 using Pools;
 using UnityEngine;
@@ -63,7 +64,12 @@ namespace Fruits
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
 
-			gameModel.CurrentScore += fruitPoint;
+			gameController.IsMerge = true;
+			gameController.IncreaseCombo();
+			gameController.IncreaseScore(fruitPoint);
+
+			//gameModel.CurrentScore += fruitPoint;
+
 			gameView.UpdateCurrentScore();
 
 			if (index == Constants.FruitTypeCount)
@@ -78,7 +84,5 @@ namespace Fruits
 			//	newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
 			//}
 		}
-
-		public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
 	}
 }

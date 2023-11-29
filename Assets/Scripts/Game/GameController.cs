@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Pools;
 using Services;
 using UnityEngine;
@@ -21,13 +22,20 @@ namespace Game
 		[SerializeField] private BoxCollider2D leftCollider;
 		[SerializeField] private BoxCollider2D rightCollider;
 
+		[Space(8.0f)]
+		[Header("Fruit Score")]
+		[SerializeField] private List<float> fruitComboIndex;
+
 		private Vector3 startPos;
 		private bool isClickable = false;
 		private Fruits.Fruit nextFruit;
 
 		private bool isDrag = false;
 		public GameServices GameServices { get; set; }
-		//private ParamServices paramServices;
+
+		private int fruitCombo = 0;
+		private bool isMerge = false;
+		private readonly float isComboTime = 2.0f;
 
 		private void Awake()
 		{
@@ -35,7 +43,6 @@ namespace Game
 			if (gameServiceObj != null)
 			{
 				GameServices = gameServiceObj.GetComponent<GameServices>();
-				//paramServices = GameServices.GetService<ParamServices>();
 			}
 			else
 			{
@@ -59,6 +66,11 @@ namespace Game
 		{
 			//Game
 			DragFruits();
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				isDrag = true;
+				StartCoroutine(DropFruitEverySecond());
+			}
 		}
 
 		private void DragFruits()
@@ -120,5 +132,41 @@ namespace Game
 			collider2D.size = size;
 			collider2D.transform.localPosition = localPos;
 		}
+
+		private IEnumerator CalculateScoreCombo()
+		{
+			float startTime = Time.time;
+			fruitCombo = -1;
+			Logger.Debug(isMerge);
+			while (isMerge)
+			{
+				if (Time.time - startTime < isComboTime)
+				{
+					Logger.Debug("Combo");
+					fruitCombo++;
+					isMerge = false;
+					yield break;
+				}
+				yield return null;
+			}
+		}
+
+		public void IncreaseCombo()
+		{
+			StartCoroutine(CalculateScoreCombo());
+		}
+
+		public void IncreaseScore(int fruitPoint)
+		{
+			if(fruitCombo > 5)
+			{
+				fruitCombo = 5;
+			}
+			Logger.Debug(Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]));
+			gameModel.CurrentScore += Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
+		}
+
+		public int FruitCombo => fruitCombo;
+		public bool IsMerge { get => isMerge; set => isMerge = value; }
 	}
 }

@@ -39,7 +39,6 @@ namespace GamePlay
 				{
 					Logger.Debug("GameOverrrrrrrrrrrrr");
 					gameView.ShowGameOverPopup();
-					//yield return new WaitForSeconds(1.0f);
 					yield break;
 				}
 				yield return null;

@@ -1512,6 +1512,17 @@ MonoBehaviour:
   topCollider: {fileID: 7658646720529636609}
   leftCollider: {fileID: 7658646719836399535}
   rightCollider: {fileID: 7658646720356815947}
+  fruitComboIndex:
+  - 1
+  - 1.2
+  - 1.4
+  - 1.7
+  - 2
+  - 2.4
+  - 2.9
+  - 3.5
+  - 4.2
+  - 5
 --- !u!1001 &1022511495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2131,8 +2142,8 @@ MonoBehaviour:
   - {fileID: 4994717091817728138, guid: ce74e083528681d459bf8c563df9982f, type: 3}
   - {fileID: 5518585575003821084, guid: a0d605045915a2c4896d23667aadb7c0, type: 3}
   - {fileID: 2181171275419000798, guid: 7297c1cf8911f5d41a53c296f3e413c3, type: 3}
-  - {fileID: 4706856674316843559, guid: 195268be24b0c514d9123ce5a25059c8, type: 3}
-  - {fileID: 5784819802658321489, guid: b244e56c42dd8de47afb96b01e888583, type: 3}
+  - {fileID: 4706856674316843559, guid: fe42be22e2e3f29449349c6abc317174, type: 3}
+  - {fileID: 5784819802658321489, guid: 3f9031b04ba18bc41b1752f3c0731309, type: 3}
   combineFruitPrefabs:
   - {fileID: -3932411414117266286, guid: 1ae9d81470732fe4e86eda81808fcd7f, type: 3}
   - {fileID: 5334574256047124854, guid: f09c28c5fd24fb742a28b15a9a8c80c5, type: 3}
