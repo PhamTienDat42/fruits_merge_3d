@@ -26,7 +26,7 @@ namespace Pools
 		private void Awake()
 		{
 			fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
-			for (int i = 1; i <= 9; i++)
+			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
 				ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i - 1]), poolSizeForDrag, parentFruitPools);
 				fruitPools.Add(i, pool);
@@ -39,9 +39,9 @@ namespace Pools
 			//	combinePools.Add(i, pool);
 			//}
 
-			for (int i = 1; i <= 9; i++)
+			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
-				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i-1), poolSizeForCombinePool, parentFruitCombinePools);
+				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i - 1), poolSizeForCombinePool, parentFruitCombinePools);
 				combinePools.Add(i, objectPool);
 			}
 		}
