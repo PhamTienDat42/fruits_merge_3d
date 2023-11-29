@@ -64,7 +64,27 @@ namespace Pools
 			}
 
 			Fruit2D combineFruit = combinePools[index].GetObject(pos);
+			Transform childTranform = combineFruit.GetComponent<Transform>().GetChild(0);
+			StartCoroutine(RandomRotateFruits(childTranform, 5.0f));
 			return combineFruit;
+		}
+
+		private IEnumerator RandomRotateFruits(Transform fruitTransform, float duration)
+		{
+			float t = 0.0f;
+			float randomX = Random.Range(0.0f, 360.0f);
+			float randomY = Random.Range(0.0f, 360.0f);
+
+			Quaternion startRot = fruitTransform.localRotation;
+			Quaternion endRot = Quaternion.Euler(randomX, randomY, 0.0f);
+
+			while(t < duration)
+			{
+				fruitTransform.localRotation = Quaternion.Lerp(startRot, endRot, t / duration);
+				t += Time.deltaTime;
+				yield return null;
+			}
+			fruitTransform.localRotation = endRot;
 		}
 	}
 }
