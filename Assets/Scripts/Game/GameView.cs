@@ -22,5 +22,10 @@ namespace Game
 		{
 			SceneManager.LoadScene(Constants.HomeScene);
 		}
+
+		public void OnPlayAgainButtonClick()
+		{
+			SceneManager.LoadScene(Constants.GameScene);
+		}
 	}
 }
