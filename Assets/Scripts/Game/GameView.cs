@@ -39,6 +39,7 @@ namespace Game
 
 		public void OnSettingButtonClick()
 		{
+			Time.timeScale = 0.0f;
 			paramServices.PopupTypeParam = PopupType.SettingPopup;
 			PopupHelpers.Show(Constants.Popup);
 		}

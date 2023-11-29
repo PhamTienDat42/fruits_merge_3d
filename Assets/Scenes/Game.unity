@@ -1504,8 +1504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae533a6b4415bb543acc1c4f6a7303ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitMesh:
-  - {fileID: 50176685316884439, guid: f31f185e64bf812469c619d2afb1b99a, type: 3}
+  fruitMesh: {fileID: -5575762493385977988, guid: f31f185e64bf812469c619d2afb1b99a, type: 3}
+  fruitForDistanceTransform: {fileID: 143171251647054458, guid: 58a1861d009a3cf4586b7110333fd59e, type: 3}
   mainCamera: {fileID: 600410824}
   fruitManager: {fileID: 1593492360}
   gameModel: {fileID: 455688608}
@@ -1858,6 +1858,90 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1569293131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569293132}
+  - component: {fileID: 1569293133}
+  m_Layer: 0
+  m_Name: Square
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1569293132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569293131}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 0.1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7658646720529636608}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1569293133
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569293131}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1590318158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2047,6 +2131,8 @@ MonoBehaviour:
   - {fileID: 4994717091817728138, guid: ce74e083528681d459bf8c563df9982f, type: 3}
   - {fileID: 5518585575003821084, guid: a0d605045915a2c4896d23667aadb7c0, type: 3}
   - {fileID: 2181171275419000798, guid: 7297c1cf8911f5d41a53c296f3e413c3, type: 3}
+  - {fileID: 4706856674316843559, guid: 195268be24b0c514d9123ce5a25059c8, type: 3}
+  - {fileID: 5784819802658321489, guid: b244e56c42dd8de47afb96b01e888583, type: 3}
   combineFruitPrefabs:
   - {fileID: -3932411414117266286, guid: 1ae9d81470732fe4e86eda81808fcd7f, type: 3}
   - {fileID: 5334574256047124854, guid: f09c28c5fd24fb742a28b15a9a8c80c5, type: 3}
@@ -2057,6 +2143,8 @@ MonoBehaviour:
   - {fileID: 6842991827529156129, guid: f4b28c83620b1574882a39711e61d975, type: 3}
   - {fileID: 262365470093769688, guid: 4158a2bb49e30094a933ef94b90e1035, type: 3}
   - {fileID: 7142289487995457937, guid: 43d5de6f4bf97f64892ed38fcd08fefb, type: 3}
+  - {fileID: -3932411414117266286, guid: 530cbac7b8fc78146a5774228951c545, type: 3}
+  - {fileID: 5334574256047124854, guid: 58a1861d009a3cf4586b7110333fd59e, type: 3}
   parentFruitPools: {fileID: 196975150}
   parentFruitCombinePools: {fileID: 1679223675}
   gameController: {fileID: 996970116}
@@ -2505,7 +2593,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1569293132}
   m_Father: {fileID: 7658646720050942251}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
