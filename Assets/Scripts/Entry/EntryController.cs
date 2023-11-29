@@ -22,6 +22,7 @@ namespace Entry
 			}
 
 			gameServices.AddService(new PlayerServices());
+			gameServices.AddService(new ParamServices());
 
 			//---------------------GetServices----------------------------------------
 			var playerServices = gameServices.GetService<PlayerServices>();
