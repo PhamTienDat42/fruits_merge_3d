@@ -7,8 +7,9 @@ namespace Fruits
 	public class Fruit2D : MonoBehaviour
 	{
 		[SerializeField] private int fruitPoint;
-		private GameController controller;
+		private GameController gameController;
 		private GameView gameView;
+		private GameModel gameModel;
 		private FruitManager fruitManager;
 
 		private Rigidbody2D rb;
@@ -22,12 +23,13 @@ namespace Fruits
 			fruitManager = fruitManagerObj.GetComponent<FruitManager>();
 		}
 
-		//public void InstantiateFruits(FruitPools fruitPools, GameController gameController, GameView gameView)
-		//{
-		//	this.fruitPools = fruitPools;
-		//	this.controller = gameController;
-		//	this.gameView = gameView;
-		//}
+		public void InstantiateFruits(FruitManager fruitManager, GameController gameController, GameView gameView, GameModel gameModel)
+		{
+			this.fruitManager = fruitManager;
+			this.gameController = gameController;
+			this.gameView = gameView;
+			this.gameModel = gameModel;
+		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
@@ -60,8 +62,14 @@ namespace Fruits
 			}
 
 			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+
+			Logger.Debug(fruitPoint);
+			gameModel.CurrentScore += fruitPoint;
+
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
+
+			gameView.UpdateCurrentScore();
 
 			if (fruitPoint == 9)
 			{
