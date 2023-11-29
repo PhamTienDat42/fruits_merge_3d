@@ -7,20 +7,16 @@ namespace Fruits
 	public class Fruit2D : MonoBehaviour
 	{
 		[SerializeField] private int fruitPoint;
+
 		private GameController gameController;
 		private GameView gameView;
 		private GameModel gameModel;
 		private FruitManager fruitManager;
-
 		private Rigidbody2D rb;
-
-		private const string FruitManagerTag = "FruitManager";
 
 		private void Start()
 		{
 			rb = GetComponent<Rigidbody2D>();
-			var fruitManagerObj = GameObject.FindGameObjectWithTag(FruitManagerTag);
-			fruitManager = fruitManagerObj.GetComponent<FruitManager>();
 		}
 
 		public void InstantiateFruits(FruitManager fruitManager, GameController gameController, GameView gameView, GameModel gameModel)
@@ -63,12 +59,10 @@ namespace Fruits
 
 			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
-			Logger.Debug(fruitPoint);
-			gameModel.CurrentScore += fruitPoint;
-
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
 
+			gameModel.CurrentScore += fruitPoint;
 			gameView.UpdateCurrentScore();
 
 			if (fruitPoint == 9)
