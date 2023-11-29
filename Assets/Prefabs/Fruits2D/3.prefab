@@ -167,4 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32c4a668c6fb3b488d154edb1cef327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPoint: 3
+  fruitPoint: 9
+  index: 3

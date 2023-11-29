@@ -84,7 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32c4a668c6fb3b488d154edb1cef327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPoint: 7
+  fruitPoint: 21
+  index: 7
 --- !u!1 &8114828982530700391
 GameObject:
   m_ObjectHideFlags: 0
