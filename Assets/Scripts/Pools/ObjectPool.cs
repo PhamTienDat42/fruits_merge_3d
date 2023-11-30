@@ -6,8 +6,8 @@ namespace Pools
 {
 	public class ObjectPool<T> where T : MonoBehaviour
 	{
-		private List<T> objectPool = new();
-		private Func<T> objectFactory;
+		private readonly List<T> objectPool = new();
+		private readonly Func<T> objectFactory;
 
 		public ObjectPool(Func<T> factory, int initialPoolSize, GameObject parent)
 		{
