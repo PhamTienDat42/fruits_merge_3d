@@ -98,10 +98,38 @@ namespace Pools
 			return fruitIndex;
 		}
 
+		private int RandomFruitToDrop2()
+		{
+			Logger.Debug(totalRandomScore);
+			var currentTotalScore = totalRandomScore;
+			var score = UnityEngine.Random.Range(0, currentTotalScore);
+
+			var rateStep = 0;
+			var fruitIndex = 0;
+
+			var j = randomScores.Count;
+			for (var i = 0; i < randomScores.Count; ++i, --j)
+			{
+				rateStep += randomScores[i];
+				if (score < rateStep && fruitIndex == 0)
+				{
+					fruitIndex = i + 1;
+					var temp = randomScores[i] - randomStartScores[i];
+					randomScores[i] = randomStartScores[i];
+					totalRandomScore -= temp;
+					continue;
+				}
+
+				randomScores[i] += bonusRandomScores[i];
+				totalRandomScore += bonusRandomScores[i];
+			}
+			return fruitIndex;
+		}
+
 		public Fruit2D GetNewFruitForShow(Vector3 pos)
 		{
 			//int randomPoints = UnityEngine.Random.Range(1, 6);
-			int randomPoints = RandomFruitToDrop();
+			int randomPoints = RandomFruitToDrop2();
 			Fruit2D newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}
