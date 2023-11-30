@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fruits;
@@ -22,6 +23,8 @@ namespace Pools
 
 		private readonly int poolSizeForCombinePool = 10;
 		private readonly int poolSizeForDrag = 1;
+
+		public event Action<Fruit2D> OnFruitCombinedFromPool;
 
 		private void Awake()
 		{
@@ -55,7 +58,7 @@ namespace Pools
 
 		public Fruit GetNewFruitForShow(Vector3 pos)
 		{
-			int randomPoints = Random.Range(1, 6);
+			int randomPoints = UnityEngine.Random.Range(1, 6);
 			Fruit newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}
@@ -82,16 +85,17 @@ namespace Pools
 			}
 
 			Fruit2D combineFruit = combinePools[index].GetObject(pos);
+			combineFruit.OnFruitCombined += OnFruitCombinedFromPool;
 			Transform childTranform = combineFruit.GetComponent<Transform>().GetChild(0);
-			StartCoroutine(RandomRotateFruits(childTranform, 5.0f));
+			StartCoroutine(RandomRotateFruits(childTranform, 3.0f));
 			return combineFruit;
 		}
 
 		private IEnumerator RandomRotateFruits(Transform fruitTransform, float duration)
 		{
 			float t = 0.0f;
-			float randomX = Random.Range(0.0f, 360.0f);
-			float randomY = Random.Range(0.0f, 360.0f);
+			float randomX = UnityEngine.Random.Range(0.0f, 360.0f);
+			float randomY = UnityEngine.Random.Range(0.0f, 360.0f);
 
 			Quaternion startRot = fruitTransform.localRotation;
 			Quaternion endRot = Quaternion.Euler(randomX, randomY, 0.0f);
