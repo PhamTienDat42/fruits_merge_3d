@@ -26,6 +26,12 @@ namespace Pools
 
 		public event Action<Fruit2D> OnFruitCombinedFromPool;
 
+		private int totalRandomScore = 300;
+		private int randomFruitIndex = 0;
+		private List<int> randomStartScores = new();
+		[SerializeField] private List<int> randomScores;
+		[SerializeField] private List<int> bonusRandomScores;
+
 		private void Awake()
 		{
 			//fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
@@ -48,6 +54,7 @@ namespace Pools
 				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i - 1), poolSizeForCombinePool, parentFruitCombinePools);
 				combinePools.Add(i, objectPool);
 			}
+			randomStartScores.AddRange(randomScores);
 		}
 
 		private Fruit2D DIFruit(int index)
@@ -57,9 +64,44 @@ namespace Pools
 			return fruit;
 		}
 
+		private int RandomFruitToDrop()
+		{
+			Logger.Debug(totalRandomScore);
+			var currentTotalScore = totalRandomScore;
+			var score = UnityEngine.Random.Range(0, currentTotalScore);
+
+			var rateStep = 0;
+			var fruitIndex = 0;
+
+			for (var i = 0; i < randomScores.Count; ++i)
+			{
+				rateStep += randomScores[i];
+				if (score < rateStep)
+				{
+					fruitIndex = i+1;
+					var temp = randomScores[i] - randomStartScores[i];
+					randomScores[i] = randomStartScores[i];
+					totalRandomScore -= temp;
+					break;
+				}
+			}
+
+			for(var i = 0; i < randomScores.Count; ++i)
+			{
+				if(i != fruitIndex-1)
+				{
+					randomScores[i] += bonusRandomScores[i];
+					totalRandomScore += bonusRandomScores[i];
+				}
+			}
+
+			return fruitIndex;
+		}
+
 		public Fruit2D GetNewFruitForShow(Vector3 pos)
 		{
-			int randomPoints = UnityEngine.Random.Range(1, 6);
+			//int randomPoints = UnityEngine.Random.Range(1, 6);
+			int randomPoints = RandomFruitToDrop();
 			Fruit2D newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}

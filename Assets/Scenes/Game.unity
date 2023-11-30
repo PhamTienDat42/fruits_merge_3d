@@ -1995,6 +1995,8 @@ MonoBehaviour:
   gameController: {fileID: 996970116}
   gameView: {fileID: 468249503}
   gameModel: {fileID: 455688608}
+  randomScores: 640000005000000041000000280000000f000000
+  bonusRandomScores: 000000000000000000000000050000000a000000
 --- !u!1 &1679223675
 GameObject:
   m_ObjectHideFlags: 0
