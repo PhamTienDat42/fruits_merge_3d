@@ -9,7 +9,7 @@ namespace Pools
 {
 	public class FruitManager : MonoBehaviour
 	{
-		[SerializeField] private List<Fruit> fruitPrefabs;
+		[SerializeField] private List<Fruit2D> fruitPrefabs;
 		[SerializeField] private List<Fruit2D> combineFruitPrefabs;
 		[SerializeField] private GameObject parentFruitPools;
 		[SerializeField] private GameObject parentFruitCombinePools;
@@ -18,7 +18,7 @@ namespace Pools
 		[SerializeField] private GameView gameView;
 		[SerializeField] private GameModel gameModel;
 
-		private Dictionary<int, ObjectPool<Fruit>> fruitPools;
+		private Dictionary<int, ObjectPool<Fruit2D>> fruitPools;
 		private Dictionary<int, ObjectPool<Fruit2D>> combinePools;
 
 		private readonly int poolSizeForCombinePool = 10;
@@ -28,20 +28,21 @@ namespace Pools
 
 		private void Awake()
 		{
-			fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
+			//fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
+			//for (int i = 1; i <= Constants.FruitTypeCount; i++)
+			//{
+			//	ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i - 1]), poolSizeForDrag, parentFruitPools);
+			//	fruitPools.Add(i, pool);
+			//}
+
+			fruitPools = new Dictionary<int, ObjectPool<Fruit2D>>();
 			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
-				ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i - 1]), poolSizeForDrag, parentFruitPools);
+				ObjectPool<Fruit2D> pool = new(() => Instantiate(fruitPrefabs[i - 1]), poolSizeForDrag, parentFruitPools);
 				fruitPools.Add(i, pool);
 			}
 
 			combinePools = new Dictionary<int, ObjectPool<Fruit2D>>();
-			//for (int i = 1; i <= 9; i++)
-			//{
-			//	ObjectPool<Fruit2D> pool = new(() => Instantiate(combineFruitPrefabs[i - 1]), poolSizeForCombinePool, parentFruitCombinePools);
-			//	combinePools.Add(i, pool);
-			//}
-
 			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
 				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i - 1), poolSizeForCombinePool, parentFruitCombinePools);
@@ -56,10 +57,10 @@ namespace Pools
 			return fruit;
 		}
 
-		public Fruit GetNewFruitForShow(Vector3 pos)
+		public Fruit2D GetNewFruitForShow(Vector3 pos)
 		{
 			int randomPoints = UnityEngine.Random.Range(1, 6);
-			Fruit newFruit = fruitPools[randomPoints].GetObject(pos);
+			Fruit2D newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}
 

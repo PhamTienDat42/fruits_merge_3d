@@ -30,7 +30,7 @@ namespace Game
 
 		private Vector3 startPos;
 		private bool isClickable = false;
-		private Fruits.Fruit nextFruit;
+		private Fruits.Fruit2D nextFruit;
 
 		private bool isDrag = false;
 		public GameServices GameServices { get; set; }
@@ -97,7 +97,7 @@ namespace Game
 				var newPosX = Random.Range(-2f, 2f);
 				var newPos = new Vector3(newPosX, startPos.y, 0f);
 				nextFruit.gameObject.SetActive(false);
-				fruitManager.GetFruitForDrop(nextFruit.FruitPoint, newPos);
+				fruitManager.GetFruitForDrop(nextFruit.FruitIndex, newPos);
 				nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			}
 		}
@@ -117,7 +117,7 @@ namespace Game
 		{
 			isClickable = false;
 			nextFruit.gameObject.SetActive(false);
-			fruitManager.GetFruitForDrop(nextFruit.FruitPoint, pos);
+			fruitManager.GetFruitForDrop(nextFruit.FruitIndex, pos);
 			yield return new WaitForSeconds(1.5f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			isClickable = true;
