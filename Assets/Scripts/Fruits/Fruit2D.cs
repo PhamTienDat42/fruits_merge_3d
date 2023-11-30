@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using Game;
 using Pools;
 using UnityEngine;
@@ -15,6 +15,8 @@ namespace Fruits
 		private GameModel gameModel;
 		private FruitManager fruitManager;
 		private Rigidbody2D rb;
+
+		public event Action<Fruit2D> OnFruitCombined;
 
 		private void Start()
 		{
@@ -49,6 +51,7 @@ namespace Fruits
 
 		private void CombineFruit(Fruit2D otherFruit)
 		{
+			OnFruitCombined?.Invoke(this);
 			Fruit2D higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
 			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
 			Vector3 newFruitPos = higherFruit.transform.position;
@@ -64,14 +67,6 @@ namespace Fruits
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
 
-			gameController.IsMerge = true;
-			gameController.IncreaseCombo();
-			gameController.IncreaseScore(fruitPoint);
-
-			//gameModel.CurrentScore += fruitPoint;
-
-			gameView.UpdateCurrentScore();
-
 			if (index == Constants.FruitTypeCount)
 			{
 				return;
@@ -84,5 +79,12 @@ namespace Fruits
 			//	newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
 			//}
 		}
+
+		private void OnDisable()
+		{
+			OnFruitCombined = null;
+		}
+
+		public int FruitPoint => fruitPoint;
 	}
 }
