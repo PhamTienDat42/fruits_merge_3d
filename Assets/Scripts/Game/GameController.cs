@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fruits;
 using Pools;
 using Services;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Game
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private FruitManager fruitManager;
 		[SerializeField] private GameModel gameModel;
+		[SerializeField] private GameView gameView;
 
 		[Space(8.0f)]
 		[Header("Bound-Collider2D")]
@@ -34,8 +36,9 @@ namespace Game
 		public GameServices GameServices { get; set; }
 
 		private int fruitCombo = 0;
-		private bool isMerge = false;
 		private readonly float isComboTime = 2.0f;
+
+		private float lastCombineTime = float.MaxValue;
 
 		private void Awake()
 		{
@@ -60,6 +63,8 @@ namespace Game
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
+
+			fruitManager.OnFruitCombinedFromPool += OnFruitCombined2;
 		}
 
 		private void Update()
@@ -85,7 +90,7 @@ namespace Game
 
 		private IEnumerator DropFruitEverySecond()
 		{
-			Time.timeScale = 2.0f;
+			//Time.timeScale = 2.0f;
 			while (isDrag)
 			{
 				yield return new WaitForSeconds(1.0f);
@@ -120,8 +125,8 @@ namespace Game
 
 		private void SetBoxBound2D(Camera mainCamera)
 		{
-			float screenHeight = mainCamera.orthographicSize * 2f;
-			float screenWidth = screenHeight * mainCamera.aspect;
+			var screenHeight = mainCamera.orthographicSize * 2f;
+			var screenWidth = screenHeight * mainCamera.aspect;
 			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight / 2f - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x, 0f));
 			SetBoundPosition2D(leftCollider, new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f));
 			SetBoundPosition2D(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
@@ -133,40 +138,24 @@ namespace Game
 			collider2D.transform.localPosition = localPos;
 		}
 
-		private IEnumerator CalculateScoreCombo()
-		{
-			float startTime = Time.time;
-			fruitCombo = -1;
-			Logger.Debug(isMerge);
-			while (isMerge)
-			{
-				if (Time.time - startTime < isComboTime)
-				{
-					Logger.Debug("Combo");
-					fruitCombo++;
-					isMerge = false;
-					yield break;
-				}
-				yield return null;
-			}
-		}
-
-		public void IncreaseCombo()
-		{
-			StartCoroutine(CalculateScoreCombo());
-		}
-
 		public void IncreaseScore(int fruitPoint)
 		{
-			if(fruitCombo > 5)
+			if (fruitCombo > 9)
 			{
-				fruitCombo = 5;
+				fruitCombo = 9;
 			}
+
 			Logger.Debug(Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]));
 			gameModel.CurrentScore += Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
+			gameView.UpdateCurrentScore();
 		}
 
-		public int FruitCombo => fruitCombo;
-		public bool IsMerge { get => isMerge; set => isMerge = value; }
+		private void OnFruitCombined2(Fruit2D fruit)
+		{
+			float elapsedTimeSinceCombine = Time.time - lastCombineTime;
+			fruitCombo = elapsedTimeSinceCombine < isComboTime ? ++fruitCombo : 0;
+			IncreaseScore(fruit.FruitPoint);
+			lastCombineTime = Time.time;
+		}
 	}
 }

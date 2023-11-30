@@ -1509,6 +1509,7 @@ MonoBehaviour:
   mainCamera: {fileID: 600410824}
   fruitManager: {fileID: 1593492360}
   gameModel: {fileID: 455688608}
+  gameView: {fileID: 468249503}
   topCollider: {fileID: 7658646720529636609}
   leftCollider: {fileID: 7658646719836399535}
   rightCollider: {fileID: 7658646720356815947}
