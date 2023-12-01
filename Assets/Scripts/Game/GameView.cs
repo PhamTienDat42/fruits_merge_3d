@@ -24,7 +24,7 @@ namespace Game
 
 		public void UpdateCurrentScore()
 		{
-			currentScore.text = $"Score: {gameModel.CurrentScore}";
+			currentScore.text = $"Score {gameModel.CurrentScore}";
 		}
 
 		public void OnEscButtonClick()

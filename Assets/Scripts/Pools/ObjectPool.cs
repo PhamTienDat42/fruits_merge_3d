@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Pools
@@ -16,7 +17,14 @@ namespace Pools
 			for (int i = 0; i < initialPoolSize; i++)
 			{
 				T obj = CreateObject();
-				obj.transform.parent = parent.transform;
+				if (obj.GetComponent<TMP_Text>() != null)
+				{
+					obj.transform.SetParent(parent.transform);
+				}
+				else
+				{
+					obj.transform.parent = parent.transform;
+				}
 				objectPool.Add(obj);
 			}
 		}

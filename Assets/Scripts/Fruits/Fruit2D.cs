@@ -52,9 +52,9 @@ namespace Fruits
 		private void CombineFruit(Fruit2D otherFruit)
 		{
 			OnFruitCombined?.Invoke(this);
-			Fruit2D higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
+			var higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
 			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
-			Vector3 newFruitPos = higherFruit.transform.position;
+			var newFruitPos = higherFruit.transform.position;
 			var newIndex = fruitIndex + 1;
 
 			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
@@ -72,12 +72,11 @@ namespace Fruits
 				return;
 			}
 
-			Fruit2D newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
+			var newBonusScorePos = new Vector3(newFruitPos.x, newFruitPos.y, -5.0f);
+			fruitManager.ShowBonusScore(fruitPoint, newBonusScorePos);
+
+			var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
 			newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
-			//if (Math.Abs(newVelocity.y) < 0.5f && Math.Abs(newVelocity.x) < 0.1f)
-			//{
-			//	newFruit.GetComponent<Rigidbody>().AddForce(Vector2.up, ForceMode.Impulse);
-			//}
 		}
 
 		private void OnDisable()

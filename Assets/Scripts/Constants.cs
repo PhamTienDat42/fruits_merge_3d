@@ -17,4 +17,13 @@ public class Constants
 	public const string WatermelonCount = "wtc";
 
 	public const int FruitTypeCount = 11;
+
+	//Animation
+	public const string ToggleIsOn = "IsOn";
+	public const string TogglePressed = "Pressed";
+
+	// Key
+	public const string SoundKey = "sou";
+	public const string EffectKey = "eff";
+	public const string HapticKey = "hapt";
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fruits;
 using Game;
+using TMPro;
 using UnityEngine;
 
 namespace Pools
@@ -11,8 +12,10 @@ namespace Pools
 	{
 		[SerializeField] private List<Fruit2D> fruitPrefabs;
 		[SerializeField] private List<Fruit2D> combineFruitPrefabs;
+		[SerializeField] private List<TMP_Text> bonusScoreTMPPrefabs;
 		[SerializeField] private GameObject parentFruitPools;
 		[SerializeField] private GameObject parentFruitCombinePools;
+		[SerializeField] private GameObject parentBonusScorePools;
 
 		[SerializeField] private GameController gameController;
 		[SerializeField] private GameView gameView;
@@ -20,6 +23,7 @@ namespace Pools
 
 		private Dictionary<int, ObjectPool<Fruit2D>> fruitPools;
 		private Dictionary<int, ObjectPool<Fruit2D>> combinePools;
+		private Dictionary<int, ObjectPool<TMP_Text>> bonusScorePools;
 
 		private readonly int poolSizeForCombinePool = 10;
 		private readonly int poolSizeForDrag = 1;
@@ -33,13 +37,6 @@ namespace Pools
 
 		private void Awake()
 		{
-			//fruitPools = new Dictionary<int, ObjectPool<Fruit>>();
-			//for (int i = 1; i <= Constants.FruitTypeCount; i++)
-			//{
-			//	ObjectPool<Fruit> pool = new(() => Instantiate(fruitPrefabs[i - 1]), poolSizeForDrag, parentFruitPools);
-			//	fruitPools.Add(i, pool);
-			//}
-
 			fruitPools = new Dictionary<int, ObjectPool<Fruit2D>>();
 			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
@@ -53,6 +50,15 @@ namespace Pools
 				ObjectPool<Fruit2D> objectPool = new(() => DIFruit(i - 1), poolSizeForCombinePool, parentFruitCombinePools);
 				combinePools.Add(i, objectPool);
 			}
+			randomStartScores.AddRange(randomScores);
+
+			bonusScorePools = new Dictionary<int, ObjectPool<TMP_Text>>();
+			for (int i = 1; i <= Constants.FruitTypeCount; i++)
+			{
+				ObjectPool<TMP_Text> objectPool = new(() => Instantiate(bonusScoreTMPPrefabs[i - 1]), poolSizeForCombinePool, parentBonusScorePools);
+				bonusScorePools.Add(i, objectPool);
+			}
+
 			randomStartScores.AddRange(randomScores);
 		}
 
@@ -92,6 +98,26 @@ namespace Pools
 			int randomPoints = RandomFruitToDrop();
 			Fruit2D newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
+		}
+
+		public TMP_Text GetNewBonusScoreForShow(Vector3 pos)
+		{
+			int randomPoints = RandomFruitToDrop();
+			TMP_Text bonusScore = bonusScorePools[randomPoints].GetObject(pos);
+			return bonusScore;
+		}
+
+		private IEnumerator IShowBonusScore(int num, Vector3 pos)
+		{
+			var bonusScore = GetNewBonusScoreForShow(pos);
+			bonusScore.text = $"+{num}";
+			yield return new WaitForSeconds(0.25f);
+			bonusScore.gameObject.SetActive(false);
+		}
+
+		public void ShowBonusScore(int point, Vector3 pos)
+		{
+			StartCoroutine(IShowBonusScore(point, pos));
 		}
 
 		public Fruit2D GetFruitForDrop(int index, Vector3 pos)
