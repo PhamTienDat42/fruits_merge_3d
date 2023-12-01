@@ -18,6 +18,8 @@ namespace Game
 		[SerializeField] private GameModel gameModel;
 		[SerializeField] private GameView gameView;
 
+		[SerializeField] private SpriteRenderer bgSpriteRenderer;
+
 		[Space(8.0f)]
 		[Header("Bound-Collider2D")]
 		[SerializeField] private BoxCollider2D topCollider;
@@ -63,6 +65,7 @@ namespace Game
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
+			ScaleBackground(bgSpriteRenderer);
 
 			fruitManager.OnFruitCombinedFromPool += OnFruitCombined2;
 		}
@@ -156,6 +159,15 @@ namespace Game
 			fruitCombo = elapsedTimeSinceCombine < isComboTime ? ++fruitCombo : 0;
 			IncreaseScore(fruit.FruitPoint);
 			lastCombineTime = Time.time;
+		}
+
+		private void ScaleBackground(SpriteRenderer bgSpiteRenderer)
+		{
+			var cameraHeight = 2.0f * mainCamera.orthographicSize + 0.05f;
+			var cameraWidth = cameraHeight * mainCamera.aspect + 0.05f;
+			var scaleX = cameraWidth / bgSpiteRenderer.bounds.size.x;
+			var scaleY = cameraHeight / bgSpiteRenderer.bounds.size.y;
+			bgSpiteRenderer.transform.localScale = new Vector3(scaleX, scaleY, 1.0f);
 		}
 	}
 }
