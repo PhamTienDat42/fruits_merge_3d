@@ -27,7 +27,6 @@ namespace Pools
 		public event Action<Fruit2D> OnFruitCombinedFromPool;
 
 		private int totalRandomScore = 300;
-		private int randomFruitIndex = 0;
 		private List<int> randomStartScores = new();
 		[SerializeField] private List<int> randomScores;
 		[SerializeField] private List<int> bonusRandomScores;
@@ -66,49 +65,11 @@ namespace Pools
 
 		private int RandomFruitToDrop()
 		{
-			Logger.Debug(totalRandomScore);
-			var currentTotalScore = totalRandomScore;
-			var score = UnityEngine.Random.Range(0, currentTotalScore);
-
+			var score = UnityEngine.Random.Range(0, totalRandomScore);
 			var rateStep = 0;
 			var fruitIndex = 0;
 
 			for (var i = 0; i < randomScores.Count; ++i)
-			{
-				rateStep += randomScores[i];
-				if (score < rateStep)
-				{
-					fruitIndex = i+1;
-					var temp = randomScores[i] - randomStartScores[i];
-					randomScores[i] = randomStartScores[i];
-					totalRandomScore -= temp;
-					break;
-				}
-			}
-
-			for(var i = 0; i < randomScores.Count; ++i)
-			{
-				if(i != fruitIndex-1)
-				{
-					randomScores[i] += bonusRandomScores[i];
-					totalRandomScore += bonusRandomScores[i];
-				}
-			}
-
-			return fruitIndex;
-		}
-
-		private int RandomFruitToDrop2()
-		{
-			Logger.Debug(totalRandomScore);
-			var currentTotalScore = totalRandomScore;
-			var score = UnityEngine.Random.Range(0, currentTotalScore);
-
-			var rateStep = 0;
-			var fruitIndex = 0;
-
-			var j = randomScores.Count;
-			for (var i = 0; i < randomScores.Count; ++i, --j)
 			{
 				rateStep += randomScores[i];
 				if (score < rateStep && fruitIndex == 0)
@@ -128,8 +89,7 @@ namespace Pools
 
 		public Fruit2D GetNewFruitForShow(Vector3 pos)
 		{
-			//int randomPoints = UnityEngine.Random.Range(1, 6);
-			int randomPoints = RandomFruitToDrop2();
+			int randomPoints = RandomFruitToDrop();
 			Fruit2D newFruit = fruitPools[randomPoints].GetObject(pos);
 			return newFruit;
 		}
