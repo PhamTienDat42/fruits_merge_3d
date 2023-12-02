@@ -13,19 +13,6 @@ MonoBehaviour:
   m_Name: BallTypeNoPhysics
   m_EditorClassIdentifier: 
   ballTypes:
-  - Name: SportBalls
-    Fruit2D:
-    - {fileID: 4789994541403540624, guid: c0e8c7b1861a3374bb8473b043299f88, type: 3}
-    - {fileID: 5620617923314473598, guid: 419a2f502605ba540bb8402f302bdb9a, type: 3}
-    - {fileID: 7240666838616960830, guid: 283d71ce3eb1b9e4b9dcf27d74bbd7d1, type: 3}
-    - {fileID: 8533927355934825862, guid: 702cea5df36d0104ebe071d0c1ddefec, type: 3}
-    - {fileID: 670017002433502900, guid: 6fab7215a7e74134087a01918f35a011, type: 3}
-    - {fileID: 5172969409350306714, guid: 9062cb5f81cd30b4fb306c47148b41c1, type: 3}
-    - {fileID: 2701813665060299863, guid: 6b9594f4f543390469caab73b2f16785, type: 3}
-    - {fileID: 200235115226372252, guid: c32ba35d3c1b84a4d9972a9957925ae4, type: 3}
-    - {fileID: 5439581176407951, guid: 3ec496b211ceb22419bb7c87026352ff, type: 3}
-    - {fileID: 5838939737709818185, guid: a4df825ba48dd944c9f4fc7092fe09dd, type: 3}
-    - {fileID: 511783860765284961, guid: dfd978f8cfd090444afa53aa56d2ff39, type: 3}
   - Name: BilliardBalls
     Fruit2D:
     - {fileID: 1542152104260969041, guid: 2a20ec416f1633d4594c9d6ba1d81ec5, type: 3}
@@ -39,3 +26,16 @@ MonoBehaviour:
     - {fileID: 3968127464327318410, guid: 94fc6a69c79b98f49ba34bc7acd5bc19, type: 3}
     - {fileID: 1243907565351160133, guid: 3ce07271edde45e49b2b333566ab0fb8, type: 3}
     - {fileID: 4076720875364383185, guid: fa3ba74c64eb929468b6e7af743b8e79, type: 3}
+  - Name: SportBalls
+    Fruit2D:
+    - {fileID: 4789994541403540624, guid: c0e8c7b1861a3374bb8473b043299f88, type: 3}
+    - {fileID: 5620617923314473598, guid: 419a2f502605ba540bb8402f302bdb9a, type: 3}
+    - {fileID: 7240666838616960830, guid: 283d71ce3eb1b9e4b9dcf27d74bbd7d1, type: 3}
+    - {fileID: 8533927355934825862, guid: 702cea5df36d0104ebe071d0c1ddefec, type: 3}
+    - {fileID: 670017002433502900, guid: 6fab7215a7e74134087a01918f35a011, type: 3}
+    - {fileID: 5172969409350306714, guid: 9062cb5f81cd30b4fb306c47148b41c1, type: 3}
+    - {fileID: 2701813665060299863, guid: 6b9594f4f543390469caab73b2f16785, type: 3}
+    - {fileID: 200235115226372252, guid: c32ba35d3c1b84a4d9972a9957925ae4, type: 3}
+    - {fileID: 5439581176407951, guid: 3ec496b211ceb22419bb7c87026352ff, type: 3}
+    - {fileID: 5838939737709818185, guid: a4df825ba48dd944c9f4fc7092fe09dd, type: 3}
+    - {fileID: 511783860765284961, guid: dfd978f8cfd090444afa53aa56d2ff39, type: 3}
