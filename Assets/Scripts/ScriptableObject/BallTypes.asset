@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5afd05306af7a540b023e531c4b99a9, type: 3}
+  m_Name: BallTypes
+  m_EditorClassIdentifier: 
+  ballTypes:
+  - Name: SportBalls
+    Fruit2D:
+    - {fileID: 1533217618762867411, guid: 628f66d5596656e4c8f215a62eac6cb2, type: 3}
+    - {fileID: 4383382254210661864, guid: f746f2d5b105fb644baf6e63948d4ed1, type: 3}
+    - {fileID: 8788121059301139859, guid: c68c62176dedad545b45626a3fe44838, type: 3}
+    - {fileID: 7698166440745365774, guid: 1071e76ce01600b4ba8632d59fb78c71, type: 3}
+    - {fileID: 7079474820637781227, guid: 4b7ae96fa41ab4440986be3c7d1a97b6, type: 3}
+    - {fileID: 108858784962540884, guid: 20b0987d11c6f8d48aa639b2c43c82d5, type: 3}
+    - {fileID: 2782897339011765610, guid: fc1186d0f22faa94abe35919a7880fc7, type: 3}
+    - {fileID: 3055366429915712157, guid: 10000557c44f33c459cddbc54bb41a25, type: 3}
+    - {fileID: 2754708028486163120, guid: 2d68507bf6d3add489491e378821170e, type: 3}
+    - {fileID: 2018718506398471419, guid: 5daa1b7baf5e1cc4d88c082b10e0aba2, type: 3}
+    - {fileID: 1635275435830654201, guid: 9e46d39be2b8d8b4689dfff2a0c1be86, type: 3}
+  - Name: BilliardBalls
+    Fruit2D:
+    - {fileID: 2555542449938449490, guid: 2c8f22751ed30d04fa93f6cc339b1cce, type: 3}
+    - {fileID: 3805673527762171233, guid: 2e3cada553c2c894f958486cbe7d03ea, type: 3}
+    - {fileID: 4387267933583684301, guid: aa7625acd013ec34f9fbf3778bb2664b, type: 3}
+    - {fileID: 5878095819288365841, guid: cac5e4a7daae9e740a354b6c68d98495, type: 3}
+    - {fileID: 2292323052021268528, guid: 50a8bc4e92fe87c46a0cf559e907316b, type: 3}
+    - {fileID: 2388700446658253311, guid: 1c42d71767d5b9a4490b49f4b491ec9f, type: 3}
+    - {fileID: 1454833808609690705, guid: afa21958dce583b46a5b4e373aef5f20, type: 3}
+    - {fileID: 5753836070195785350, guid: c4983505efbe9a24ba548c1c1a2cfa9e, type: 3}
+    - {fileID: 3093619453907322305, guid: d55b43198e52425449589de37dd72f28, type: 3}
+    - {fileID: 9015710020337790960, guid: 9699af84eb5645f43b61d91613feaf7d, type: 3}
+    - {fileID: 8523204593812370289, guid: 9f6d102220bfaac4e8062d9376dcec4f, type: 3}
