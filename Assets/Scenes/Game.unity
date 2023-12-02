@@ -1413,6 +1413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dab22ec186dec44bcbfb86951b85f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballTypes: {fileID: 11400000, guid: bd5f2b875547734428aa14e19972189a, type: 2}
+  ballTypesNoPhysic: {fileID: 11400000, guid: e804febbda3b8274db97dbd717a04134, type: 2}
   fruitPrefabs:
   - {fileID: 4789994541403540624, guid: c0e8c7b1861a3374bb8473b043299f88, type: 3}
   - {fileID: 5620617923314473598, guid: 419a2f502605ba540bb8402f302bdb9a, type: 3}

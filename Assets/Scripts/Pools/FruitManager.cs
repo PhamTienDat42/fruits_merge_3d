@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fruits;
 using Game;
+using ScriptableObjects;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ namespace Pools
 {
 	public class FruitManager : MonoBehaviour
 	{
+		[Header("ScriptableObject")]
+		[SerializeField] private SOBallType ballTypes;
+		[SerializeField] private SOBallType ballTypesNoPhysic;
+
 		[SerializeField] private List<Fruit2D> fruitPrefabs;
 		[SerializeField] private List<Fruit2D> combineFruitPrefabs;
 		[SerializeField] private List<TMP_Text> bonusScoreTMPPrefabs;
@@ -31,12 +36,18 @@ namespace Pools
 		public event Action<Fruit2D> OnFruitCombinedFromPool;
 
 		private int totalRandomScore = 300;
-		private List<int> randomStartScores = new();
+		private readonly List<int> randomStartScores = new();
 		[SerializeField] private List<int> randomScores;
 		[SerializeField] private List<int> bonusRandomScores;
 
 		private void Awake()
 		{
+			var index = PlayerPrefs.GetInt(Constants.Theme, 0);
+			fruitPrefabs.Clear();
+			combineFruitPrefabs.Clear();
+			fruitPrefabs.AddRange(ballTypesNoPhysic.BallTypes[index].Fruit2D);
+			combineFruitPrefabs.AddRange(ballTypes.BallTypes[index].Fruit2D);
+
 			fruitPools = new Dictionary<int, ObjectPool<Fruit2D>>();
 			for (int i = 1; i <= Constants.FruitTypeCount; i++)
 			{
