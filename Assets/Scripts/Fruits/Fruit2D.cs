@@ -20,6 +20,7 @@ namespace Fruits
 
 		private void Start()
 		{
+			LoadDataOnStart();
 			rb = GetComponent<Rigidbody2D>();
 		}
 
@@ -82,6 +83,30 @@ namespace Fruits
 		private void OnDisable()
 		{
 			OnFruitCombined = null;
+		}
+
+		private void LoadDataOnStart()
+		{
+			Fruit2DData savedData = SaveLoadManager.LoadFruitData();
+			if (savedData != null)
+			{
+				FromData(savedData);
+			}
+		}
+
+		public Fruit2DData ToData()
+		{
+			Fruit2DData fruitData = new(this.transform.position);
+			fruitData.FruitPoint = fruitPoint;
+			fruitData.FruitIndex = fruitIndex;
+			return fruitData;
+		}
+
+		public void FromData(Fruit2DData data)
+		{
+			fruitPoint = data.FruitPoint;
+			fruitIndex = data.FruitIndex;
+			transform.position = data.GetPosition();
 		}
 
 		public int FruitPoint => fruitPoint;
