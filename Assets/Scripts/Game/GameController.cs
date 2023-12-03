@@ -169,5 +169,10 @@ namespace Game
 			var scaleY = cameraHeight / bgSpiteRenderer.bounds.size.y;
 			bgSpiteRenderer.transform.localScale = new Vector3(scaleX, scaleY, 1.0f);
 		}
+
+		public void SaveGamePlay()
+		{
+			fruitManager.SaveCombinePool();
+		}
 	}
 }

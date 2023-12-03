@@ -71,6 +71,7 @@ namespace Pools
 			}
 
 			randomStartScores.AddRange(randomScores);
+			LoadCombinePool();
 		}
 
 		private Fruit2D DIFruit(int index)
@@ -175,6 +176,47 @@ namespace Pools
 				yield return null;
 			}
 			fruitTransform.localRotation = endRot;
+		}
+
+		public void SaveFruitPool(ObjectPool<Fruit2D> yourFruitPool)
+		{
+			List<Fruit2DData> fruitDataList = new();
+			foreach (Fruit2D fruit in yourFruitPool.GetObjectList())
+			{
+				Fruit2DData fruitData = fruit.ToData();
+				fruitDataList.Add(fruitData);
+			}
+			SaveLoadManager.SaveFruitData(fruitDataList);
+		}
+
+		public void LoadFruitPool(ObjectPool<Fruit2D> yourFruitPool)
+		{
+			List<Fruit2DData> loadedFruitDataList = SaveLoadManager.LoadFruitDataPool();
+			if (loadedFruitDataList != null)
+			{
+				for (int i = 0; i < loadedFruitDataList.Count; i++)
+				{
+					Fruit2DData fruitData = loadedFruitDataList[i];
+					Fruit2D fruit = yourFruitPool.GetObjectList()[i];
+					fruit.FromData(fruitData);
+				}
+			}
+		}
+
+		public void SaveCombinePool()
+		{
+			foreach(var pool in combinePools)
+			{
+				SaveFruitPool(pool.Value);
+			}
+		}
+
+		public void LoadCombinePool()
+		{
+			foreach(var pool in combinePools)
+			{
+				LoadFruitPool(pool.Value);
+			}
 		}
 	}
 }
