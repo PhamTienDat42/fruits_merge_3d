@@ -73,12 +73,12 @@ namespace Pools
 				ObjectPool<TMP_Text> objectPool = new(() => Instantiate(bonusScoreTMPPrefabs[i - 1]), poolSizeForCombinePool, parentBonusScorePools);
 				bonusScorePools.Add(i, objectPool);
 			}
-
-			randomStartScores.AddRange(randomScores);
 		}
 
 		private void Start()
 		{
+			randomStartScores.AddRange(randomScores);
+
 			paramServices = gameController.GameServices.GetService<ParamServices>();
 			if(paramServices.IsContinue == true)
 			{
@@ -135,7 +135,7 @@ namespace Pools
 		{
 			var bonusScore = GetNewBonusScoreForShow(pos);
 			bonusScore.text = $"+{num}";
-			yield return new WaitForSeconds(0.25f);
+			yield return new WaitForSeconds(1.0f);
 			bonusScore.gameObject.SetActive(false);
 		}
 
