@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using DG.Tweening;
 using Fruits;
 using Game;
 using ScriptableObjects;
@@ -135,6 +136,8 @@ namespace Pools
 		{
 			var bonusScore = GetNewBonusScoreForShow(pos);
 			bonusScore.text = $"+{num}";
+			var bonusPos = new Vector3(pos.x, pos.y+1.0f, pos.z);
+			bonusScore.transform.DOMove(bonusPos, 1.0f);
 			yield return new WaitForSeconds(1.0f);
 			bonusScore.gameObject.SetActive(false);
 		}

@@ -72,7 +72,7 @@ namespace Fruits
 				return;
 			}
 
-			var newBonusScorePos = new Vector3(newFruitPos.x, newFruitPos.y, -5.0f);
+			var newBonusScorePos = new Vector3(newFruitPos.x - 0.2f, newFruitPos.y, -5.0f);
 			fruitManager.ShowBonusScore(fruitPoint, newBonusScorePos);
 
 			var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
