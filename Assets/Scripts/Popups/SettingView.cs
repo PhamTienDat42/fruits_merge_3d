@@ -1,5 +1,5 @@
-using System;
 using Services;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -50,6 +50,7 @@ namespace SettingPopup
 
 		private void OnPlayAgainButtonClick()
 		{
+			Time.timeScale = 1.0f;
 			SceneManager.LoadScene(Constants.GameScene);
 		}
 
@@ -61,6 +62,7 @@ namespace SettingPopup
 
 		public void OnHomeButtonClick()
 		{
+			Time.timeScale = 1.0f;
 			SceneManager.LoadScene(Constants.HomeScene);
 		}
 	}
