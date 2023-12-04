@@ -4,6 +4,7 @@ using Fruits;
 using Pools;
 using Services;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Game
@@ -73,11 +74,19 @@ namespace Game
 		private void Update()
 		{
 			//Game
-			DragFruits();
-			if (Input.GetKeyDown(KeyCode.Space))
+			if(!EventSystem.current.IsPointerOverGameObject())
+			{
+				DragFruits();
+			}
+
+			if (Input.GetKeyDown(KeyCode.Space) && isDrag == false)
 			{
 				isDrag = true;
 				StartCoroutine(DropFruitEverySecond());
+			}
+			else if(Input.GetKeyDown(KeyCode.Space) && isDrag == true)
+			{
+				isDrag = false;
 			}
 		}
 
@@ -122,6 +131,7 @@ namespace Game
 			nextFruit.gameObject.SetActive(false);
 			fruitManager.GetFruitForDrop(nextFruit.FruitIndex, pos);
 			yield return new WaitForSeconds(1.5f);
+			fruitManager.SaveCombinePool();
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			isClickable = true;
 		}
@@ -173,24 +183,6 @@ namespace Game
 		public void SaveGamePlay()
 		{
 			fruitManager.SaveCombinePool();
-		}
-
-		private void OnDestroy()
-		{
-			fruitManager.SaveCombinePool();
-		}
-
-		private void OnApplicationQuit()
-		{
-			fruitManager.SaveCombinePool();
-		}
-
-		private void OnApplicationPause(bool focus)
-		{
-			if (focus)
-			{
-				fruitManager.SaveCombinePool();
-			}
 		}
 	}
 }
