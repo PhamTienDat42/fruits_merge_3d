@@ -20,6 +20,10 @@ namespace Game
 		private void Start()
 		{
 			paramServices = gameController.GameServices.GetService<ParamServices>();
+			if(paramServices.IsContinue == true)
+			{
+				currentScore.text = $"{PlayerPrefs.GetInt(Constants.OldScore, 0)}";
+			}
 		}
 
 		public void UpdateCurrentScore()
