@@ -1,75 +1,51 @@
-using Fruits;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using Fruits;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class SaveLoadManager : MonoBehaviour
 {
-	private const string SaveFileName = "FruitData.dat";
-
-	public static void SaveFruitData(Fruit2D fruit)
+	public static void SaveFruitDataJson(List<Fruit2DData> fruitDataList)
 	{
-		Fruit2DData fruitData = Fruit2DData.FromFruit(fruit);
-		BinaryFormatter formatter = new();
-		string filePath = Path.Combine(Application.persistentDataPath, SaveFileName);
+		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
 
-		using (FileStream stream = new(filePath, FileMode.Create))
+		List<Fruit2DData> existingData = new();
+		if (File.Exists(filePath))
 		{
-			formatter.Serialize(stream, fruitData);
+			string jsonData = File.ReadAllText(filePath);
+			if (!string.IsNullOrEmpty(jsonData))
+			{
+				existingData = JsonConvert.DeserializeObject<List<Fruit2DData>>(jsonData);
+			}
 		}
+		existingData.AddRange(fruitDataList);
+
+		string updatedJsonData = JsonConvert.SerializeObject(existingData, Newtonsoft.Json.Formatting.Indented);
+		File.WriteAllText(filePath, updatedJsonData);
 	}
 
-	public static void SaveFruitData(List<Fruit2DData> fruitDataList)
+	public static List<Fruit2DData> LoadFruitDataFromJson()
 	{
-		BinaryFormatter formatter = new BinaryFormatter();
-		string filePath = Path.Combine(Application.persistentDataPath, SaveFileName);
-
-		using (FileStream stream = new FileStream(filePath, FileMode.Create))
-		{
-			formatter.Serialize(stream, fruitDataList);
-		}
-	}
-
-	public static Fruit2DData LoadFruitData()
-	{
-		string filePath = Path.Combine(Application.persistentDataPath, SaveFileName);
+		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+		List<Fruit2DData> loadedData = new();
 
 		if (File.Exists(filePath))
 		{
-			BinaryFormatter formatter = new();
-			using (FileStream stream = new(filePath, FileMode.Open))
+			string jsonData = File.ReadAllText(filePath);
+
+			if (!string.IsNullOrEmpty(jsonData))
 			{
-				Fruit2DData fruitData = (Fruit2DData)formatter.Deserialize(stream);
-				return fruitData;
+				loadedData = JsonConvert.DeserializeObject<List<Fruit2DData>>(jsonData);
 			}
 		}
-		else
-		{
-			Logger.Debug($"File doesn't exist in {filePath}");
-		}
-
-		return null;
+		return loadedData;
 	}
 
-	public static List<Fruit2DData> LoadFruitDataPool()
+	public static void SaveSingleFruitDataJson(Fruit2DData fruitData)
 	{
-		string filePath = Path.Combine(Application.persistentDataPath, SaveFileName);
-
-		if (File.Exists(filePath))
-		{
-			BinaryFormatter formatter = new();
-			using (FileStream stream = new FileStream(filePath, FileMode.Open))
-			{
-				List<Fruit2DData> fruitDataList = (List<Fruit2DData>)formatter.Deserialize(stream);
-				return fruitDataList;
-			}
-		}
-		else
-		{
-			Debug.LogWarning($"File doesn't exist in {filePath}");
-		}
-
-		return null;
+		string jsonData = JsonUtility.ToJson(fruitData);
+		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+		System.IO.File.WriteAllText(filePath, jsonData);
 	}
 }
