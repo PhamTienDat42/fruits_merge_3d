@@ -74,7 +74,7 @@ namespace Game
 		private void Update()
 		{
 			//Game
-			if(!EventSystem.current.IsPointerOverGameObject())
+			if (!EventSystem.current.IsPointerOverGameObject())
 			{
 				DragFruits();
 			}
@@ -84,7 +84,7 @@ namespace Game
 				isDrag = true;
 				StartCoroutine(DropFruitEverySecond());
 			}
-			else if(Input.GetKeyDown(KeyCode.Space) && isDrag == true)
+			else if (Input.GetKeyDown(KeyCode.Space) && isDrag == true)
 			{
 				isDrag = false;
 			}
@@ -160,7 +160,7 @@ namespace Game
 			gameModel.CurrentScore += Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
 			PlayerPrefs.SetInt(Constants.OldScore, gameModel.CurrentScore);
 			var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
-			if(gameModel.CurrentScore > highScore)
+			if (gameModel.CurrentScore > highScore)
 			{
 				PlayerPrefs.SetInt(Constants.HighScore, gameModel.CurrentScore);
 			}

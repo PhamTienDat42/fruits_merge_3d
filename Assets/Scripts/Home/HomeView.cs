@@ -1,4 +1,5 @@
 using Services;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,12 +8,14 @@ namespace Home
 	public class HomeView : MonoBehaviour
 	{
 		[SerializeField] private HomeController homeController;
+		[SerializeField] private TMP_Text highScoreTMP;
 
 		private ParamServices paramServices;
 
 		private void Start()
 		{
 			paramServices = homeController.GameServices.GetService<ParamServices>();
+			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
 		}
 
 		public void OnPlayButtonClick()
