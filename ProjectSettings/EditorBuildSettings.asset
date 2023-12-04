@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Popup.unity
     guid: 4c71b0d2a518556449aa648a0d273047
+  - enabled: 1
+    path: Assets/Scenes/RankingPopup.unity
+    guid: bfb3b7210cdb62142aa3607a4475cf82
   m_configObjects: {}

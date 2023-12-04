@@ -4,6 +4,7 @@ public class Constants
 	public const string GameScene = "Scenes/Game";
 	public const string HomeScene = "Scenes/Home";
 	public const string Popup = "Scenes/Popup";
+	public const string RankingPopup = "Scenes/RankingPopup";
 
 	//Tags
 	public const string ServicesTag = "Services";
