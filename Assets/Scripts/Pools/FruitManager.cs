@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Fruits;
 using Game;
 using ScriptableObjects;
+using Services;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +42,8 @@ namespace Pools
 		[SerializeField] private List<int> randomScores;
 		[SerializeField] private List<int> bonusRandomScores;
 
+		private ParamServices paramServices;
+
 		private void Awake()
 		{
 			var index = PlayerPrefs.GetInt(Constants.Theme, 0);
@@ -71,7 +75,15 @@ namespace Pools
 			}
 
 			randomStartScores.AddRange(randomScores);
-			LoadCombinePool();
+		}
+
+		private void Start()
+		{
+			paramServices = gameController.GameServices.GetService<ParamServices>();
+			if(paramServices.IsContinue == true)
+			{
+				LoadCombinePool();
+			}
 		}
 
 		private Fruit2D DIFruit(int index)
@@ -178,7 +190,7 @@ namespace Pools
 			fruitTransform.localRotation = endRot;
 		}
 
-		public void SaveFruitPool(ObjectPool<Fruit2D> yourFruitPool)
+		private void SaveFruitPoolJson(ObjectPool<Fruit2D> yourFruitPool)
 		{
 			List<Fruit2DData> fruitDataList = new();
 			foreach (Fruit2D fruit in yourFruitPool.GetObjectList())
@@ -186,18 +198,30 @@ namespace Pools
 				Fruit2DData fruitData = fruit.ToData();
 				fruitDataList.Add(fruitData);
 			}
-			SaveLoadManager.SaveFruitData(fruitDataList);
+			SaveLoadManager.SaveFruitDataJson(fruitDataList);
 		}
 
-		public void LoadFruitPool(ObjectPool<Fruit2D> yourFruitPool)
+		//private void SaveSingleFruitPoolJson(ObjectPool<Fruit2D> yourFruitPool)
+		//{
+		//	//List<Fruit2DData> fruitDataList = new();
+		//	foreach (Fruit2D fruit in yourFruitPool.GetObjectList())
+		//	{
+		//		Fruit2DData fruitData = fruit.ToData();
+		//		SaveLoadManager.SaveSingleFruitDataJson(fruit.ToData());
+		//		//fruitDataList.Add(fruitData);
+		//	}
+		//}
+
+		private void LoadFruitPoolJson(ObjectPool<Fruit2D> yourFruitPool, int index)
 		{
-			List<Fruit2DData> loadedFruitDataList = SaveLoadManager.LoadFruitDataPool();
+			List<Fruit2DData> loadedFruitDataList = SaveLoadManager.LoadFruitDataFromJson();
 			if (loadedFruitDataList != null)
 			{
-				for (int i = 0; i < loadedFruitDataList.Count; i++)
+				var length = index * 10 + 10;
+				for (int i = 10 * index; i < length; i++)
 				{
 					Fruit2DData fruitData = loadedFruitDataList[i];
-					Fruit2D fruit = yourFruitPool.GetObjectList()[i];
+					Fruit2D fruit = yourFruitPool.GetObjectList()[i % 10];
 					fruit.FromData(fruitData);
 				}
 			}
@@ -205,17 +229,19 @@ namespace Pools
 
 		public void SaveCombinePool()
 		{
-			foreach(var pool in combinePools)
+			string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+			File.WriteAllText(filePath, string.Empty);
+			foreach (var pool in combinePools)
 			{
-				SaveFruitPool(pool.Value);
+				SaveFruitPoolJson(pool.Value);
 			}
 		}
 
 		public void LoadCombinePool()
 		{
-			foreach(var pool in combinePools)
+			for (int i = 0; i < combinePools.Count; ++i)
 			{
-				LoadFruitPool(pool.Value);
+				LoadFruitPoolJson(combinePools[i + 1], i);
 			}
 		}
 	}

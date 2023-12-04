@@ -6,23 +6,10 @@ namespace Fruits
 	[Serializable]
 	public class Fruit2DData
 	{
-		private int fruitIndex;
-		private int fruitPoint;
-		private float[] position;
-
-		public static Fruit2DData FromFruit(Fruit2D fruit2D)
-		{
-			Fruit2DData fruit2DData = new();
-			fruit2DData.fruitIndex = fruit2D.FruitIndex;
-			fruit2DData.fruitPoint = fruit2D.FruitPoint;
-
-			fruit2DData.position = new float[3];
-			fruit2DData.position[0] = fruit2D.transform.localPosition.x;
-			fruit2DData.position[1] = fruit2D.transform.localPosition.y;
-			fruit2DData.position[2] = fruit2D.transform.localPosition.z;
-
-			return fruit2DData;
-		}
+		[SerializeField] private int fruitIndex;
+		[SerializeField] private int fruitPoint;
+		[SerializeField] private bool isActived;
+		[SerializeField] private float[] position;
 
 		public Fruit2DData()
 		{
@@ -31,7 +18,7 @@ namespace Fruits
 
 		public Fruit2DData(Vector3 position)
 		{
-			this.position = new float[] { position.x, position.y, position.z };
+			this.Position = new float[] { position.x, position.y, position.z };
 		}
 
 		public Vector3 GetPosition()
@@ -41,6 +28,7 @@ namespace Fruits
 
 		public int FruitIndex { get => fruitIndex; set => fruitIndex = value; }
 		public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
+		public bool IsActived { get => isActived; set => isActived = value; }
 		public float[] Position { get => position; set => position = value; }
 	}
 }
