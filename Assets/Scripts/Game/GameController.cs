@@ -174,5 +174,23 @@ namespace Game
 		{
 			fruitManager.SaveCombinePool();
 		}
+
+		private void OnDestroy()
+		{
+			fruitManager.SaveCombinePool();
+		}
+
+		private void OnApplicationQuit()
+		{
+			fruitManager.SaveCombinePool();
+		}
+
+		private void OnApplicationPause(bool focus)
+		{
+			if (focus)
+			{
+				fruitManager.SaveCombinePool();
+			}
+		}
 	}
 }
