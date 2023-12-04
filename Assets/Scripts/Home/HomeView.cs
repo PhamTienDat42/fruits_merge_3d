@@ -2,6 +2,7 @@ using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 namespace Home
 {
@@ -40,6 +41,11 @@ namespace Home
 			Time.timeScale = 1.0f;
 			paramServices.IsContinue = true;
 			SceneManager.LoadScene(Constants.GameScene);
+		}
+
+		public void OnRankingButtonClick()
+		{
+			PopupHelpers.Show(Constants.RankingPopup);
 		}
 	}
 }
