@@ -15,6 +15,7 @@ public class Constants
 	//Score
 	public const string HighScore = "hscr";
 	public const string WatermelonCount = "wtc";
+	public const string OldScore = "oscr";
 
 	public const int FruitTypeCount = 11;
 
