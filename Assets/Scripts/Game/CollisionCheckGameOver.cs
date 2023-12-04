@@ -37,7 +37,7 @@ namespace GamePlay
 				if (Time.time - startTime > collisionDuration)
 				{
 					Logger.Debug("GameOverrrrrrrrrrrrr");
-					gameView.ShowGameOverPopup();
+					controller.GameOver();
 					yield break;
 				}
 				yield return null;
