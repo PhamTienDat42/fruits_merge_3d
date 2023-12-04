@@ -157,9 +157,14 @@ namespace Game
 			{
 				fruitCombo = 9;
 			}
-
-			Logger.Debug(Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]));
 			gameModel.CurrentScore += Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
+			PlayerPrefs.SetInt(Constants.OldScore, gameModel.CurrentScore);
+			var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
+			if(gameModel.CurrentScore > highScore)
+			{
+				PlayerPrefs.SetInt(Constants.HighScore, gameModel.CurrentScore);
+			}
+			PlayerPrefs.Save();
 			gameView.UpdateCurrentScore();
 		}
 

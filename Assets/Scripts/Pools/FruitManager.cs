@@ -83,6 +83,7 @@ namespace Pools
 			paramServices = gameController.GameServices.GetService<ParamServices>();
 			if(paramServices.IsContinue == true)
 			{
+				gameModel.CurrentScore = PlayerPrefs.GetInt(Constants.OldScore, 0);
 				LoadCombinePool();
 			}
 		}
