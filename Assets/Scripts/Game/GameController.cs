@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Fruits;
 using Pools;
 using Services;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -78,7 +79,7 @@ namespace Game
 			{
 				DragFruits();
 			}
-
+#if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.Space) && isDrag == false)
 			{
 				isDrag = true;
@@ -88,6 +89,7 @@ namespace Game
 			{
 				isDrag = false;
 			}
+#endif
 		}
 
 		private void DragFruits()
@@ -188,6 +190,14 @@ namespace Game
 		public void SaveGamePlay()
 		{
 			fruitManager.SaveCombinePool();
+		}
+
+		public void GameOver()
+		{
+			string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+			File.WriteAllText(filePath, string.Empty);
+			PlayerPrefs.SetInt(Constants.OldScore, 0);
+			gameView.ShowGameOverPopup();
 		}
 	}
 }
