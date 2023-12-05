@@ -2,6 +2,7 @@ using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Utilities;
 
 namespace Home
@@ -11,11 +12,21 @@ namespace Home
 		[SerializeField] private HomeController homeController;
 		[SerializeField] private TMP_Text highScoreTMP;
 
+		[Space(8.0f)]
+		[Header("Toggle")]
+		[SerializeField] private Toggle musicToggle;
+		[SerializeField] private Toggle sfxToggle;
+		[SerializeField] private Toggle hapticToggle;
+
 		private ParamServices paramServices;
+		private PlayerServices playerServices;
 
 		private void Start()
 		{
 			paramServices = homeController.GameServices.GetService<ParamServices>();
+			playerServices = homeController.GameServices.GetService<PlayerServices>();
+
+			ShowToggleValueStart();
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
 		}
 
@@ -46,6 +57,36 @@ namespace Home
 		public void OnRankingButtonClick()
 		{
 			PopupHelpers.Show(Constants.RankingPopup);
+		}
+
+		public void OnSoundToggleValueChanged()
+		{
+			playerServices.Sound = !musicToggle.isOn;
+			playerServices.SettingsSave();
+		}
+
+		public void OnSfxToggleValueChanged()
+		{
+			playerServices.Effect = !sfxToggle.isOn;
+			playerServices.SettingsSave();
+		}
+
+		public void OnHapticToggleValueChanged()
+		{
+			playerServices.Haptic = !hapticToggle.isOn;
+			playerServices.SettingsSave();
+		}
+
+		public void OnSettingSave()
+		{
+			playerServices.SettingsSave();
+		}
+
+		public void ShowToggleValueStart()
+		{
+			musicToggle.isOn = !playerServices.Sound;
+			sfxToggle.isOn = !playerServices.Effect;
+			hapticToggle.isOn = !playerServices.Haptic;
 		}
 	}
 }
