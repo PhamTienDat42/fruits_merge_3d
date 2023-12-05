@@ -16,11 +16,14 @@ namespace Game
 		[SerializeField] private TMP_Text currentScore;
 
 		private ParamServices paramServices;
+		private AudioService audioService;
 
 		private void Start()
 		{
 			paramServices = gameController.GameServices.GetService<ParamServices>();
-			if(paramServices.IsContinue == true)
+			audioService = gameController.GameServices.GetService<AudioService>();
+
+			if (paramServices.IsContinue == true)
 			{
 				currentScore.text = $"{PlayerPrefs.GetInt(Constants.OldScore, 0)}";
 			}
@@ -33,16 +36,19 @@ namespace Game
 
 		public void OnEscButtonClick()
 		{
+			PlayButtonSfx();
 			SceneManager.LoadScene(Constants.HomeScene);
 		}
 
 		public void OnPlayAgainButtonClick()
 		{
+			PlayButtonSfx();
 			SceneManager.LoadScene(Constants.GameScene);
 		}
 
 		public void OnSettingButtonClick()
 		{
+			PlayButtonSfx();
 			Time.timeScale = 0.0f;
 			paramServices.PopupTypeParam = PopupType.SettingPopup;
 			PopupHelpers.Show(Constants.Popup);
@@ -53,6 +59,26 @@ namespace Game
 			Time.timeScale = 0.0f;
 			paramServices.PopupTypeParam = PopupType.GameOverPopup;
 			PopupHelpers.Show(Constants.Popup);
+		}
+
+		public void PlayButtonSfx()
+		{
+			audioService.PlaySfx(Constants.ButtonSfxName);
+		}
+
+		public void PlayMergeSfx()
+		{
+			audioService.PlaySfx(Constants.MergeSfxName);
+		}
+
+		public void PlayDropSfx()
+		{
+			audioService.PlaySfx(Constants.DropSfxName);
+		}
+
+		public void PlayCollisionSfx()
+		{
+			audioService.PlaySfx(Constants.CollisionSfxName);
 		}
 	}
 }

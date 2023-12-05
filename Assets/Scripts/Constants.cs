@@ -9,6 +9,7 @@ public class Constants
 	//Tags
 	public const string ServicesTag = "Services";
 	public const string FruitTag = "Fruit";
+	public const string SoundObjectName = "Sound";
 
 	//Nums
 	public const int TargetFrameRate = 60;
@@ -29,4 +30,12 @@ public class Constants
 	public const string EffectKey = "eff";
 	public const string HapticKey = "hapt";
 	public const string Theme = "thme";
+
+	//Audio name
+	public const string BgMusicName = "BG";
+	public const string DropSfxName = "DropSfx";
+	public const string MergeSfxName = "MergeSfx";
+	public const string LoseSfxName = "LoseSfx";
+	public const string ButtonSfxName = "ButtonSfx";
+	public const string CollisionSfxName = "CollisionSfx";
 }

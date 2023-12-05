@@ -20,11 +20,13 @@ namespace Home
 
 		private ParamServices paramServices;
 		private PlayerServices playerServices;
+		private AudioService audioService;
 
 		private void Start()
 		{
 			paramServices = homeController.GameServices.GetService<ParamServices>();
 			playerServices = homeController.GameServices.GetService<PlayerServices>();
+			audioService = homeController.GameServices.GetService<AudioService>();
 
 			ShowToggleValueStart();
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
@@ -32,6 +34,7 @@ namespace Home
 
 		public void OnPlayButtonClick()
 		{
+			PlayButtonSfx();
 			Time.timeScale = 1.0f;
 			paramServices.IsContinue = false;
 			SceneManager.LoadScene(Constants.GameScene);
@@ -39,16 +42,19 @@ namespace Home
 
 		public void OnBilliardThemeButtonClick()
 		{
+			PlayButtonSfx();
 			PlayerPrefs.SetInt(Constants.Theme, 0);
 		}
 
 		public void OnSportThemeButtonClick()
 		{
+			PlayButtonSfx();
 			PlayerPrefs.SetInt(Constants.Theme, 1);
 		}
 
 		public void OnContinueButtonClick()
 		{
+			PlayButtonSfx();
 			Time.timeScale = 1.0f;
 			paramServices.IsContinue = true;
 			SceneManager.LoadScene(Constants.GameScene);
@@ -56,30 +62,39 @@ namespace Home
 
 		public void OnRankingButtonClick()
 		{
+			PlayButtonSfx();
 			PopupHelpers.Show(Constants.RankingPopup);
 		}
 
 		public void OnSoundToggleValueChanged()
 		{
+			PlayButtonSfx();
 			playerServices.Sound = !musicToggle.isOn;
-			playerServices.SettingsSave();
+			audioService.MusicOn = !musicToggle.isOn;
 		}
 
 		public void OnSfxToggleValueChanged()
 		{
+			PlayButtonSfx() ;
 			playerServices.Effect = !sfxToggle.isOn;
-			playerServices.SettingsSave();
+			audioService.SoundOn = !sfxToggle.isOn;
 		}
 
 		public void OnHapticToggleValueChanged()
 		{
+			PlayButtonSfx() ;
 			playerServices.Haptic = !hapticToggle.isOn;
-			playerServices.SettingsSave();
+			audioService.VibrateOn = !hapticToggle.isOn;
 		}
 
 		public void OnSettingSave()
 		{
 			playerServices.SettingsSave();
+		}
+
+		public void PlayButtonSfx()
+		{
+			audioService.PlaySfx(Constants.ButtonSfxName);
 		}
 
 		public void ShowToggleValueStart()

@@ -10,8 +10,11 @@ namespace SettingPopup
 	public class SettingView : MonoBehaviour
 	{
 		[SerializeField] private TMP_Text confirmButtonTMP;
+		[SerializeField] private TMP_Text highScoreTMP;
 
 		private ParamServices paramServices;
+		private AudioService audioService;
+
 		private event Action OnConfirmButtonClicked;
 
 		private void Awake()
@@ -21,6 +24,7 @@ namespace SettingPopup
 			{
 				var gameServices = gameServiceObj.GetComponent<GameServices>();
 				paramServices = gameServices.GetService<ParamServices>();
+				audioService = gameServices.GetService<AudioService>();
 			}
 			else
 			{
@@ -30,6 +34,8 @@ namespace SettingPopup
 
 		private void Start()
 		{
+			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
+
 			if (paramServices.PopupTypeParam == PopupType.SettingPopup)
 			{
 				OnConfirmButtonClicked = OnContinueButtonClick;
@@ -45,25 +51,35 @@ namespace SettingPopup
 
 		public void OnConfirmButtonClick()
 		{
+			audioService.PlaySfx(Constants.ButtonSfxName);
 			OnConfirmButtonClicked?.Invoke();
 		}
 
 		private void OnPlayAgainButtonClick()
 		{
 			Time.timeScale = 1.0f;
+			audioService.PlaySfx(Constants.ButtonSfxName);
 			SceneManager.LoadScene(Constants.GameScene);
 		}
 
 		private void OnContinueButtonClick()
 		{
 			Time.timeScale = 1.0f;
+			audioService.PlaySfx(Constants.ButtonSfxName);
 			PopupHelpers.Close();
 		}
 
 		public void OnHomeButtonClick()
 		{
 			Time.timeScale = 1.0f;
+			audioService.PlaySfx(Constants.ButtonSfxName);
 			SceneManager.LoadScene(Constants.HomeScene);
+		}
+		public void OnRankingButtonClick()
+		{
+			Time.timeScale = 1.0f;
+			audioService.PlaySfx(Constants.ButtonSfxName);
+			PopupHelpers.Show(Constants.RankingPopup);
 		}
 	}
 }
