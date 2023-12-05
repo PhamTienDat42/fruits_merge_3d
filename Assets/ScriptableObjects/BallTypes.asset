@@ -39,3 +39,16 @@ MonoBehaviour:
     - {fileID: 3042617174534443155, guid: 2d68507bf6d3add489491e378821170e, type: 3}
     - {fileID: 6144771062170645749, guid: 5daa1b7baf5e1cc4d88c082b10e0aba2, type: 3}
     - {fileID: 5965593328526042494, guid: 9e46d39be2b8d8b4689dfff2a0c1be86, type: 3}
+  - Name: GlassFruits
+    Fruit2D:
+    - {fileID: 8325195881944043479, guid: 83bf54b9789eba644a6fbee70ac6efe7, type: 3}
+    - {fileID: 1872949491060470742, guid: 883efdcad316c364e8c29d91346e6fd7, type: 3}
+    - {fileID: 2714045533219099601, guid: 414a6b16806c21b46aea64bafd5b0517, type: 3}
+    - {fileID: 8125415219546289104, guid: 8d9ef4b60e6b7034094d6ce43b7b1180, type: 3}
+    - {fileID: 8285416995356095464, guid: c036b926c5a695d49b3e18d32472205c, type: 3}
+    - {fileID: 5749471359843023348, guid: a23248cca6c7e414085ba4cb583d9ba5, type: 3}
+    - {fileID: 3845201531777843986, guid: 52c8d22308ef042429cb97f882483b8a, type: 3}
+    - {fileID: 4569108746765071891, guid: 55a473639a33dd946bdbaa4aec65d05b, type: 3}
+    - {fileID: 4366566090862356884, guid: a346838b2b1958f4e8893f6a999565aa, type: 3}
+    - {fileID: 158746349443517273, guid: f7c45b00fc01e8e4ebc59d1a9a53f386, type: 3}
+    - {fileID: 4492095554575823723, guid: f308f52a8b24bc34581f8401d3524512, type: 3}
