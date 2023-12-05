@@ -80,5 +80,10 @@ namespace Game
 		{
 			audioService.PlaySfx(Constants.CollisionSfxName);
 		}
+
+		public void OnShakeBoosterClick()
+		{
+			gameController.BoolShake = true;
+		}
 	}
 }

@@ -52,6 +52,12 @@ namespace Home
 			PlayerPrefs.SetInt(Constants.Theme, 1);
 		}
 
+		public void OnFruitThemeButtonClick()
+		{
+			PlayButtonSfx();
+			PlayerPrefs.SetInt(Constants.Theme, 2);
+		}
+
 		public void OnContinueButtonClick()
 		{
 			PlayButtonSfx();

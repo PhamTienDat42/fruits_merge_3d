@@ -36,6 +36,8 @@ namespace Pools
 		private readonly int poolSizeForCombinePool = 10;
 		private readonly int poolSizeForDrag = 1;
 
+		private readonly float shakeForce = 5f;
+
 		public event Action<Fruit2D> OnFruitCombinedFromPool;
 
 		private int totalRandomScore = 300;
@@ -248,5 +250,30 @@ namespace Pools
 				LoadFruitPoolJson(combinePools[i + 1], i);
 			}
 		}
+
+		//Shake Phone
+		public void ApplyShakeForce()
+		{
+			Vector2 shakeDirection = UnityEngine.Random.insideUnitCircle.normalized;
+			Vector2 shakeForce = shakeDirection * this.shakeForce;
+			var rigidList = new List<Rigidbody2D>();
+
+			foreach(var pool in combinePools)
+			{
+				foreach (var fruit in pool.Value.GetObjectList())
+				{
+					if (fruit.gameObject.activeSelf)
+					{
+						rigidList.Add(fruit.Rb);
+					}
+				}
+
+				foreach (var rb in rigidList)
+				{
+					rb.AddForce(shakeForce, ForceMode2D.Impulse);
+				}
+			}
+		}
+
 	}
 }

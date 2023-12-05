@@ -104,5 +104,6 @@ namespace Fruits
 
 		public int FruitPoint => fruitPoint;
 		public int FruitIndex => fruitIndex;
+		public Rigidbody2D Rb => rb;
 	}
 }

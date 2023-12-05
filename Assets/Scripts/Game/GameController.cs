@@ -42,6 +42,9 @@ namespace Game
 		private int fruitCombo = 0;
 		private readonly float isComboTime = 2.0f;
 
+		private bool boolShake = false;
+		private readonly float shakeThreshold = 3f;
+
 		private float lastCombineTime = float.MaxValue;
 
 #if UNITY_ANDROID
@@ -78,6 +81,12 @@ namespace Game
 
 		private void Update()
 		{
+			//ShakePhone
+			if (Input.acceleration.sqrMagnitude >= shakeThreshold * shakeThreshold && boolShake == true)
+			{
+				StartCoroutine(ShakePhone());
+			}
+
 			//Game
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
@@ -120,6 +129,10 @@ namespace Game
 					{
 						isTouching = true;
 					}
+
+					var currentTouchPos = mainCamera.ScreenToWorldPoint(touch.position);
+					var newFruitPos = new Vector3(currentTouchPos.x, startPos.y, 0.0f);
+					nextFruit.transform.localPosition = newFruitPos;
 
 					if ((touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) && isTouching == true)
 					{
@@ -231,5 +244,16 @@ namespace Game
 			PlayerPrefs.SetInt(Constants.OldScore, 0);
 			gameView.ShowGameOverPopup();
 		}
+
+		public IEnumerator ShakePhone()
+		{
+			boolShake = false;
+			topCollider.isTrigger = false;
+			fruitManager.ApplyShakeForce();
+			yield return new WaitForSeconds(2.0f);
+			topCollider.isTrigger = true;
+		}
+
+		public bool BoolShake { get => boolShake; set => boolShake = value; }
 	}
 }
