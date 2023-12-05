@@ -44,6 +44,10 @@ namespace Game
 
 		private float lastCombineTime = float.MaxValue;
 
+#if UNITY_ANDROID
+		private bool isTouching = false;
+#endif
+
 		private void Awake()
 		{
 			var gameServiceObj = GameObject.FindGameObjectWithTag(Constants.ServicesTag);
@@ -89,17 +93,44 @@ namespace Game
 			{
 				isDrag = false;
 			}
+#elif UNITY_ANDROID
+
 #endif
 		}
 
 		private void DragFruits()
 		{
-			if (Input.GetMouseButtonDown(0) && isClickable == true)
+#if UNITY_EDITOR
+			if (!EventSystem.current.IsPointerOverGameObject())
 			{
-				var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-				var pos = new Vector3(mousePos.x, startPos.y, 0f);
-				StartCoroutine(Drag(pos));
+				if (Input.GetMouseButtonDown(0) && isClickable == true)
+				{
+					var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+					var pos = new Vector3(mousePos.x, startPos.y, 0f);
+					StartCoroutine(Drag(pos));
+				}
 			}
+#elif UNITY_ANDROID
+			if (isClickable == true && Input.touchCount > 0)
+			{
+				Touch touch = Input.GetTouch(0);
+				if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+				{
+					if (touch.phase == TouchPhase.Began)
+					{
+						isTouching = true;
+					}
+
+					if ((touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) && isTouching == true)
+					{
+						isTouching = false;
+						var touchPos = mainCamera.ScreenToWorldPoint(touch.position);
+						var pos = new Vector3(touchPos.x, startPos.y, 0.0f);
+						StartCoroutine(Drag(pos));
+					}
+				}
+			}
+#endif
 		}
 
 		private IEnumerator DropFruitEverySecond()
@@ -129,6 +160,7 @@ namespace Game
 
 		private IEnumerator Drag(Vector3 pos)
 		{
+			gameView.PlayDropSfx();
 			isClickable = false;
 			nextFruit.gameObject.SetActive(false);
 			fruitManager.GetFruitForDrop(nextFruit.FruitIndex, pos);

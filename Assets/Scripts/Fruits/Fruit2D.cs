@@ -51,6 +51,7 @@ namespace Fruits
 
 		private void CombineFruit(Fruit2D otherFruit)
 		{
+			gameView.PlayMergeSfx();
 			OnFruitCombined?.Invoke(this);
 			var higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
 			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
