@@ -47,9 +47,7 @@ namespace Game
 
 		private float lastCombineTime = float.MaxValue;
 
-#if UNITY_ANDROID
 		private bool isTouching = false;
-#endif
 
 		private void Awake()
 		{
@@ -109,13 +107,21 @@ namespace Game
 
 		private void DragFruits()
 		{
+			var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+			UpdateFruitShowPosition(mousePos.x);
 #if UNITY_EDITOR
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
 				if (Input.GetMouseButtonDown(0) && isClickable == true)
 				{
-					var mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-					var pos = new Vector3(mousePos.x, startPos.y, 0f);
+					isTouching = true;
+				}
+
+				if (Input.GetMouseButtonUp(0) && isTouching == true)
+				{
+					isTouching = false;
+					var dragPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+					var pos = new Vector3(dragPos.x, startPos.y, 0f);
 					StartCoroutine(Drag(pos));
 				}
 			}
@@ -130,10 +136,6 @@ namespace Game
 						isTouching = true;
 					}
 
-					var currentTouchPos = mainCamera.ScreenToWorldPoint(touch.position);
-					var newFruitPos = new Vector3(currentTouchPos.x, startPos.y, 0.0f);
-					nextFruit.transform.localPosition = newFruitPos;
-
 					if ((touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) && isTouching == true)
 					{
 						isTouching = false;
@@ -141,6 +143,28 @@ namespace Game
 						var pos = new Vector3(touchPos.x, startPos.y, 0.0f);
 						StartCoroutine(Drag(pos));
 					}
+				}
+			}
+#endif
+		}
+
+		private void UpdateFruitShowPosition(float posX)
+		{
+#if UNITY_EDITOR
+			if (!EventSystem.current.IsPointerOverGameObject() && isTouching == true)
+			{
+				var newFruitPos = new Vector3(posX, startPos.y, 0.0f);
+				nextFruit.transform.localPosition = newFruitPos;
+			}
+#elif UNITY_ANDROID
+			if (Input.touchCount > 0)
+			{
+				Touch touch = Input.GetTouch(0);
+				if (isTouching == true && !EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+				{
+					var currentTouchPos = mainCamera.ScreenToWorldPoint(touch.position);
+					var newFruitPos = new Vector3(currentTouchPos.x, startPos.y, 0.0f);
+					nextFruit.transform.localPosition = newFruitPos;
 				}
 			}
 #endif
