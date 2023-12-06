@@ -6,6 +6,9 @@ public class Constants
 	public const string Popup = "Scenes/Popup";
 	public const string RankingPopup = "Scenes/RankingPopup";
 
+	//Data file name
+	public static string FruitDataFileName = "fruitData.json";
+
 	//Tags
 	public const string ServicesTag = "Services";
 	public const string FruitTag = "Fruit";
