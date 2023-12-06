@@ -90,7 +90,6 @@ namespace Fruits
 			Fruit2DData fruitData = new(this.transform.position);
 			fruitData.FruitPoint = fruitPoint;
 			fruitData.FruitIndex = fruitIndex;
-			fruitData.IsActived = gameObject.activeSelf;
 			return fruitData;
 		}
 
@@ -98,7 +97,6 @@ namespace Fruits
 		{
 			fruitPoint = data.FruitPoint;
 			fruitIndex = data.FruitIndex;
-			gameObject.SetActive(data.IsActived);
 			transform.position = data.GetPosition();
 		}
 

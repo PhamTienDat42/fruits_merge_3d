@@ -8,7 +8,6 @@ namespace Fruits
 	{
 		[SerializeField] private int fruitIndex;
 		[SerializeField] private int fruitPoint;
-		[SerializeField] private bool isActived;
 		[SerializeField] private float[] position;
 
 		public Fruit2DData()
@@ -28,7 +27,6 @@ namespace Fruits
 
 		public int FruitIndex { get => fruitIndex; set => fruitIndex = value; }
 		public int FruitPoint { get => fruitPoint; set => fruitPoint = value; }
-		public bool IsActived { get => isActived; set => isActived = value; }
 		public float[] Position { get => position; set => position = value; }
 	}
 }
