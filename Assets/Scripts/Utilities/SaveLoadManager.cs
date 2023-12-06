@@ -8,7 +8,7 @@ public class SaveLoadManager : MonoBehaviour
 {
 	public static void SaveFruitDataJson(List<Fruit2DData> fruitDataList)
 	{
-		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+		string filePath = Path.Combine(Application.persistentDataPath, Constants.FruitDataFileName);
 
 		List<Fruit2DData> existingData = new();
 		if (File.Exists(filePath))
@@ -27,7 +27,7 @@ public class SaveLoadManager : MonoBehaviour
 
 	public static List<Fruit2DData> LoadFruitDataFromJson()
 	{
-		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+		string filePath = Path.Combine(Application.persistentDataPath, Constants.FruitDataFileName);
 		List<Fruit2DData> loadedData = new();
 
 		if (File.Exists(filePath))
@@ -45,7 +45,7 @@ public class SaveLoadManager : MonoBehaviour
 	public static void SaveSingleFruitDataJson(Fruit2DData fruitData)
 	{
 		string jsonData = JsonUtility.ToJson(fruitData);
-		string filePath = Path.Combine(Application.persistentDataPath, "fruitData.json");
+		string filePath = Path.Combine(Application.persistentDataPath, Constants.FruitDataFileName);
 		System.IO.File.WriteAllText(filePath, jsonData);
 	}
 }
