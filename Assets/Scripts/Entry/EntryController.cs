@@ -45,6 +45,7 @@ namespace Entry
 		private void Start()
 		{
 			Application.targetFrameRate = Constants.TargetFrameRate;
+			gameServices.GetService<AudioService>().PlayMusic(Constants.BgMusicName);
 			SceneManager.LoadScene(Constants.HomeScene);
 		}
 	}
