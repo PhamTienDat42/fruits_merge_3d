@@ -51,6 +51,20 @@ namespace Pools
 			return null;
 		}
 
+		public T GetObject()
+		{
+
+			foreach (T obj in objectPool)
+			{
+				if (!obj.gameObject.activeSelf)
+				{
+					obj.gameObject.SetActive(true);
+					return obj;
+				}
+			}
+			return null;
+		}
+
 		public void ReturnObjectToPool(T obj)
 		{
 			obj.gameObject.SetActive(false);
