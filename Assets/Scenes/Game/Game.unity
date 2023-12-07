@@ -917,7 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruitMesh: {fileID: -5575762493385977988, guid: f31f185e64bf812469c619d2afb1b99a, type: 3}
-  fruitForDistanceTransform: {fileID: 143171251647054458, guid: 58a1861d009a3cf4586b7110333fd59e, type: 3}
+  fruitForDistanceTransform: {fileID: 0}
   mainCamera: {fileID: 600410824}
   fruitManager: {fileID: 1593492360}
   gameModel: {fileID: 455688608}
@@ -1990,11 +1990,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
