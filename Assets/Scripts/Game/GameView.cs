@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
+using static UnityEngine.ParticleSystem;
 
 namespace Game
 {
@@ -10,6 +11,7 @@ namespace Game
 	{
 		[SerializeField] private GameController gameController;
 		[SerializeField] private GameModel gameModel;
+		[SerializeField] private ParticleSystem mergeParticle;
 
 		[Space(8.0f)]
 		[Header("TMP")]
@@ -84,6 +86,13 @@ namespace Game
 		public void OnShakeBoosterClick()
 		{
 			gameController.BoolShake = true;
+		}
+
+		public void PlayMergeParticle(float xParticle, float yParticle)
+		{
+			mergeParticle.gameObject.SetActive(true);
+			mergeParticle.transform.position = new Vector3(xParticle, yParticle, -2.0f);
+			mergeParticle.Play();
 		}
 	}
 }

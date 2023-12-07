@@ -12,9 +12,6 @@ namespace Game
 {
 	public class GameController : MonoBehaviour
 	{
-		//[SerializeField] private Mesh fruitMesh;
-		//[SerializeField] private Transform fruitForDistanceTransform;
-
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private FruitManager fruitManager;
 		[SerializeField] private GameModel gameModel;

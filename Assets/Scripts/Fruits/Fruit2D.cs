@@ -53,10 +53,15 @@ namespace Fruits
 		{
 			gameView.PlayMergeSfx();
 			OnFruitCombined?.Invoke(this);
+
 			var higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
 			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
 			var newFruitPos = higherFruit.transform.position;
 			var newIndex = fruitIndex + 1;
+
+			var yParticle = (transform.position.y + otherFruit.transform.position.y) / 2.0f;
+			var xParticle = (transform.position.x + otherFruit.transform.position.x) / 2.0f;
+			gameView.PlayMergeParticle(xParticle, yParticle);
 
 			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
 			{
