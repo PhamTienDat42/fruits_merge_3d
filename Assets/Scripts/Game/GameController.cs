@@ -1,9 +1,9 @@
-using Fruits;
-using Pools;
-using Services;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Fruits;
+using Pools;
+using Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -12,8 +12,8 @@ namespace Game
 {
 	public class GameController : MonoBehaviour
 	{
-		[SerializeField] private Mesh fruitMesh;
-		[SerializeField] private Transform fruitForDistanceTransform;
+		//[SerializeField] private Mesh fruitMesh;
+		//[SerializeField] private Transform fruitForDistanceTransform;
 
 		[SerializeField] private Camera mainCamera;
 		[SerializeField] private FruitManager fruitManager;
@@ -46,8 +46,11 @@ namespace Game
 		private readonly float shakeThreshold = 3f;
 
 		private float lastCombineTime = float.MaxValue;
-
 		private bool isTouching = false;
+
+		private Mesh fruitMesh;
+		private Transform fruitForDistanceTransform;
+		private float fruitLocalscaleX = 0.0f;
 
 		private void Awake()
 		{
@@ -68,13 +71,22 @@ namespace Game
 		{
 			isClickable = true;
 
-			var startY = mainCamera.orthographicSize - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x / 1.5f;
+			GetDistanceToShowBall();
+			var startY = mainCamera.orthographicSize - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x * fruitLocalscaleX / 1.5f;
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
 			ScaleBackground(bgSpriteRenderer);
 
 			fruitManager.OnFruitCombinedFromPool += OnFruitCombined2;
+		}
+
+		private void GetDistanceToShowBall()
+		{
+			var lastFruit = fruitManager.FruitPrefabs[^1];
+			fruitMesh = lastFruit.GetComponentInChildren<MeshFilter>().sharedMesh;
+			fruitForDistanceTransform = lastFruit.GetComponent<Transform>().GetChild(0);
+			fruitLocalscaleX = lastFruit.GetComponent<Transform>().localScale.x;
 		}
 
 		private void Update()
@@ -211,7 +223,8 @@ namespace Game
 		{
 			var screenHeight = mainCamera.orthographicSize * 2f;
 			var screenWidth = screenHeight * mainCamera.aspect;
-			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, screenHeight / 2f - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x, 0f));
+			var topPosX = screenHeight / 2f - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x * fruitLocalscaleX;
+			SetBoundPosition2D(topCollider, new Vector2(screenWidth, 0.01f), new Vector3(0f, topPosX, 0f));
 			SetBoundPosition2D(leftCollider, new Vector2(0.01f, screenHeight), new Vector3(-screenWidth / 2f, 0f, 0f));
 			SetBoundPosition2D(rightCollider, new Vector2(0.01f, screenHeight), new Vector3(screenWidth / 2f, 0f, 0f));
 		}

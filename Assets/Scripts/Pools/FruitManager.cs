@@ -288,5 +288,6 @@ namespace Pools
 			}
 		}
 
+		public List<Fruit2D> FruitPrefabs => fruitPrefabs;
 	}
 }
