@@ -37,9 +37,6 @@ namespace Entry
 			var playerService = gameServices.GetService<PlayerServices>();
 			var audioService = gameServices.GetService<AudioService>();
 			// --------------------------- Audio ---------------------------------
-			audioService.SoundOn = playerService.Effect;
-			audioService.MusicOn = playerService.Sound;
-			audioService.VibrateOn = playerService.Haptic;
 		}
 
 		private void Start()

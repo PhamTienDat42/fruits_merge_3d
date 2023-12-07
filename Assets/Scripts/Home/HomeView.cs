@@ -28,6 +28,10 @@ namespace Home
 			playerServices = homeController.GameServices.GetService<PlayerServices>();
 			audioService = homeController.GameServices.GetService<AudioService>();
 
+			audioService.SoundOn = playerServices.Effect;
+			audioService.MusicOn = playerServices.Sound;
+			audioService.VibrateOn = playerServices.Haptic;
+
 			ShowToggleValueStart();
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
 		}
