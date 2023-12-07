@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 91429698264051399}
   - component: {fileID: 91429698264051396}
   m_Layer: 0
-  m_Name: BonusScore
+  m_Name: BonusScoreTMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
