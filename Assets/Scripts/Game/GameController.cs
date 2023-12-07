@@ -238,7 +238,8 @@ namespace Game
 			{
 				fruitCombo = 9;
 			}
-			gameModel.CurrentScore += Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
+			BonusScore = Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
+			gameModel.CurrentScore += BonusScore;
 			PlayerPrefs.SetInt(Constants.OldScore, gameModel.CurrentScore);
 			var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
 			if (gameModel.CurrentScore > highScore)
@@ -289,5 +290,6 @@ namespace Game
 		}
 
 		public bool BoolShake { get => boolShake; set => boolShake = value; }
+		public int BonusScore { get; private set; }
 	}
 }

@@ -79,7 +79,7 @@ namespace Fruits
 			}
 
 			var newBonusScorePos = new Vector3(newFruitPos.x - 0.2f, newFruitPos.y, -5.0f);
-			fruitManager.ShowBonusScore(fruitPoint, newBonusScorePos);
+			fruitManager.ShowBonusScore(gameController.BonusScore, newBonusScorePos);
 
 			var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
 			newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
