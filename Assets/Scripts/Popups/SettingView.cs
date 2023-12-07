@@ -1,5 +1,5 @@
-using Services;
 using System;
+using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -75,6 +75,7 @@ namespace SettingPopup
 			audioService.PlaySfx(Constants.ButtonSfxName);
 			SceneManager.LoadScene(Constants.HomeScene);
 		}
+
 		public void OnRankingButtonClick()
 		{
 			Time.timeScale = 1.0f;
