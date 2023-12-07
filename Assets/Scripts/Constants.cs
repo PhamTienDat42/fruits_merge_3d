@@ -1,10 +1,10 @@
 public class Constants
 {
-	public const string EntryScene = "Scenes/Entry";
-	public const string GameScene = "Scenes/Game";
-	public const string HomeScene = "Scenes/Home";
-	public const string Popup = "Scenes/Popup";
-	public const string RankingPopup = "Scenes/RankingPopup";
+	public const string EntryScene = "Scenes/Entry/Entry";
+	public const string GameScene = "Scenes/Game/Game";
+	public const string HomeScene = "Scenes/Home/Home";
+	public const string Popup = "Scenes/Popups/Popup";
+	public const string RankingPopup = "Scenes/Popups/RankingPopup";
 
 	//Data file name
 	public static string FruitDataFileName = "fruitData.json";
