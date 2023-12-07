@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Home/Home.unity
     guid: 283d5f4e4014517439c5c64995681139
-  - enabled: 0
-    path: Assets/Scenes/Game.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Popups/Popup.unity
     guid: 4c71b0d2a518556449aa648a0d273047
   - enabled: 1
     path: Assets/Scenes/Popups/RankingPopup.unity
     guid: bfb3b7210cdb62142aa3607a4475cf82
+  - enabled: 1
+    path: Assets/Scenes/Game/Game.unity
+    guid: 1d1d86de981275d4f81a68103654c289
   m_configObjects: {}
