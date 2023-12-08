@@ -73,6 +73,11 @@ namespace Game
 			audioService.PlaySfx(Constants.MergeSfxName);
 		}
 
+		public void PlayBilliardMergeSfx()
+		{
+			audioService.PlaySfx(Constants.CollisionSfxName);
+		}
+
 		public void PlayDropSfx()
 		{
 			audioService.PlaySfx(Constants.DropSfxName);

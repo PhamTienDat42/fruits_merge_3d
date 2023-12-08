@@ -51,7 +51,14 @@ namespace Fruits
 
 		private void CombineFruit(Fruit2D otherFruit)
 		{
-			gameView.PlayMergeSfx();
+			if(fruitManager.BilliardThemeIndex == true)
+			{
+				gameView.PlayBilliardMergeSfx();
+			}
+			else
+			{
+				gameView.PlayMergeSfx();
+			}
 			OnFruitCombined?.Invoke(this);
 
 			var higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;

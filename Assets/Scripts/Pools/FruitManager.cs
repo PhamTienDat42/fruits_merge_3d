@@ -46,10 +46,12 @@ namespace Pools
 		[SerializeField] private List<int> bonusRandomScores;
 
 		private ParamServices paramServices;
+		public bool BilliardThemeIndex { get; private set; }
 
 		private void Awake()
 		{
 			var index = PlayerPrefs.GetInt(Constants.Theme, 0);
+			BilliardThemeIndex = index == 0;
 			fruitPrefabs.Clear();
 			combineFruitPrefabs.Clear();
 			fruitPrefabs.AddRange(ballTypesNoPhysic.BallTypes[index].Fruit2D);
