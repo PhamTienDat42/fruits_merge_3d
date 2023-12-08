@@ -114,6 +114,12 @@ namespace Game
 			SceneManager.LoadScene(Constants.GameScene);
 		}
 
+		public void OnKnifeBoosterClick()
+		{
+			gameController.IsClickable = false;
+			gameController.IsKnife = true;
+		}
+
 		public ParamServices ParamServices => paramServices;
 	}
 }

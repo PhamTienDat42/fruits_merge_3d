@@ -45,6 +45,7 @@ namespace Game
 
 		private float lastCombineTime = float.MaxValue;
 		private bool isTouching = false;
+		private bool isKnife = false;
 
 		private Mesh fruitMesh;
 		private Transform fruitForDistanceTransform;
@@ -322,7 +323,14 @@ namespace Game
 			return pos;
 		}
 
+		public void CutBallWithKnifeBooster()
+		{
+
+		}
+
 		public bool BoolShake { get => boolShake; set => boolShake = value; }
 		public int BonusScore { get; private set; }
+		public bool IsClickable { get => isClickable; set => isClickable = value; }
+		public bool IsKnife { get => isKnife; set => isKnife = value; }
 	}
 }

@@ -3,10 +3,11 @@ using Game;
 using Pools;
 using Services;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Fruits
 {
-	public class Fruit2D : MonoBehaviour
+	public class Fruit2D : MonoBehaviour, IPointerClickHandler
 	{
 		[SerializeField] private int fruitPoint;
 		[SerializeField] private int fruitIndex;
@@ -115,6 +116,16 @@ namespace Fruits
 			fruitPoint = data.FruitPoint;
 			fruitIndex = data.FruitIndex;
 			transform.position = data.GetPosition();
+		}
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			if(gameController.IsClickable == false && gameController.IsKnife == true)
+			{
+				this.gameObject.SetActive(false);
+				gameController.IsKnife = false;
+				gameController.IsClickable = true;
+			}
 		}
 
 		public int FruitPoint => fruitPoint;
