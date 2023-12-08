@@ -51,6 +51,7 @@ namespace Game
 		private float fruitLocalscaleX = 0.0f;
 
 		private ParamServices paramServices;
+		private readonly float DesignCamSize = 5.0f;
 
 		private void Awake()
 		{
@@ -297,6 +298,28 @@ namespace Game
 			fruitManager.ApplyShakeForce();
 			yield return new WaitForSeconds(2.0f);
 			topCollider.isTrigger = true;
+		}
+
+		public Vector3 ReturnFruitPositionOnZoomOutBooster(Vector3 fruitPos)
+		{
+			var posY = fruitPos.y;
+			var posX = fruitPos.x;
+
+			if (paramServices.CameraSize != 0.0f)
+			{
+				posY += paramServices.CameraSize - DesignCamSize;
+
+				if(posX > 0.0f)
+				{
+					posX -= (paramServices.CameraSize - DesignCamSize) * mainCamera.aspect;
+				}
+				else
+				{
+					posX += (paramServices.CameraSize - DesignCamSize) * mainCamera.aspect;
+				}
+			}
+			var pos = new Vector3(posX, posY, fruitPos.z);
+			return pos;
 		}
 
 		public bool BoolShake { get => boolShake; set => boolShake = value; }
