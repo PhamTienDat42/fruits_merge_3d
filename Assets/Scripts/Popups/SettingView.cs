@@ -9,6 +9,7 @@ namespace SettingPopup
 {
 	public class SettingView : MonoBehaviour
 	{
+		[SerializeField] private Camera mainCamera;
 		[SerializeField] private TMP_Text confirmButtonTMP;
 		[SerializeField] private TMP_Text highScoreTMP;
 
@@ -34,6 +35,11 @@ namespace SettingPopup
 
 		private void Start()
 		{
+			if(paramServices.CameraSize != 0.0f)
+			{
+				mainCamera.orthographicSize = paramServices.CameraSize;
+			}
+
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
 
 			if (paramServices.PopupTypeParam == PopupType.SettingPopup)
