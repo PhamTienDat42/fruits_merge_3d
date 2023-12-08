@@ -106,6 +106,12 @@ namespace Game
 				StartCoroutine(ShakePhone());
 			}
 
+			//KnifeBooster
+			if (isKnife == true && isClickable == false)
+			{
+				CutBallWithKnifeBooster();
+			}
+
 			//Game
 			if (!EventSystem.current.IsPointerOverGameObject())
 			{
@@ -310,7 +316,7 @@ namespace Game
 			{
 				posY += paramServices.CameraSize - DesignCamSize;
 
-				if(posX > 0.0f)
+				if (posX > 0.0f)
 				{
 					posX -= (paramServices.CameraSize - DesignCamSize) * mainCamera.aspect;
 				}
@@ -325,7 +331,19 @@ namespace Game
 
 		public void CutBallWithKnifeBooster()
 		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				var hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
+				if (hit.collider != null)
+				{
+					gameView.PlayCutBallSfx();
+					isKnife = false;
+					isClickable = true;
+					hit.collider.gameObject.SetActive(false);
+				}
+			}
 		}
 
 		public bool BoolShake { get => boolShake; set => boolShake = value; }
