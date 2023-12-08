@@ -2,8 +2,8 @@ using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Utilities;
-using static UnityEngine.ParticleSystem;
 
 namespace Game
 {
@@ -12,10 +12,15 @@ namespace Game
 		[SerializeField] private GameController gameController;
 		[SerializeField] private GameModel gameModel;
 		[SerializeField] private ParticleSystem mergeParticle;
+		[SerializeField] private Camera mainCamera;
 
 		[Space(8.0f)]
 		[Header("TMP")]
 		[SerializeField] private TMP_Text currentScore;
+
+		[Space(8.0f)]
+		[Header("Button")]
+		[SerializeField] private Button zoomOutButton;
 
 		private ParamServices paramServices;
 		private AudioService audioService;
@@ -29,6 +34,8 @@ namespace Game
 			{
 				currentScore.text = $"{PlayerPrefs.GetInt(Constants.OldScore, 0)}";
 			}
+
+			zoomOutButton.interactable = paramServices.CameraSize == 0.0f;
 		}
 
 		public void UpdateCurrentScore()
@@ -99,5 +106,14 @@ namespace Game
 			mergeParticle.transform.position = new Vector3(xParticle, yParticle, -2.0f);
 			mergeParticle.Play();
 		}
+
+		public void OnZoomOutCameraBooster()
+		{
+			paramServices.CameraSize = mainCamera.orthographicSize * 1.25f;
+			paramServices.IsContinue = true;
+			SceneManager.LoadScene(Constants.GameScene);
+		}
+
+		public ParamServices ParamServices => paramServices;
 	}
 }

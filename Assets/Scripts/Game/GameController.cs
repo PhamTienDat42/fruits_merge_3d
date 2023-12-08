@@ -18,6 +18,7 @@ namespace Game
 		[SerializeField] private GameView gameView;
 
 		[SerializeField] private SpriteRenderer bgSpriteRenderer;
+		[SerializeField] private GameObject groundObject;
 
 		[Space(8.0f)]
 		[Header("Bound-Collider2D")]
@@ -49,12 +50,15 @@ namespace Game
 		private Transform fruitForDistanceTransform;
 		private float fruitLocalscaleX = 0.0f;
 
+		private ParamServices paramServices;
+
 		private void Awake()
 		{
 			var gameServiceObj = GameObject.FindGameObjectWithTag(Constants.ServicesTag);
 			if (gameServiceObj != null)
 			{
 				GameServices = gameServiceObj.GetComponent<GameServices>();
+				paramServices = GameServices.GetService<ParamServices>();
 			}
 			else
 			{
@@ -68,12 +72,18 @@ namespace Game
 		{
 			isClickable = true;
 
+			if (paramServices.CameraSize != 0.0f)
+			{
+				mainCamera.orthographicSize = paramServices.CameraSize;
+			}
+
 			GetDistanceToShowBall();
 			var startY = mainCamera.orthographicSize - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x * fruitLocalscaleX / 1.5f;
 			startPos = new Vector3(0f, startY, 0f);
 			nextFruit = fruitManager.GetNewFruitForShow(startPos);
 			SetBoxBound2D(mainCamera);
 			ScaleBackground(bgSpriteRenderer);
+			groundObject.transform.localPosition = new Vector3(0.0f, -mainCamera.orthographicSize, 0.0f);
 
 			fruitManager.OnFruitCombinedFromPool += OnFruitCombined2;
 		}

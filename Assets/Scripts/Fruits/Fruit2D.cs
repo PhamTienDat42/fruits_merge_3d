@@ -1,6 +1,7 @@
 using System;
 using Game;
 using Pools;
+using Services;
 using UnityEngine;
 
 namespace Fruits
@@ -99,7 +100,15 @@ namespace Fruits
 
 		public Fruit2DData ToData()
 		{
-			Fruit2DData fruitData = new(this.transform.position);
+			var posY = 0.0f;
+			if(gameView.ParamServices.CameraSize != 0.0f)
+			{
+				posY = this.transform.position.y + (gameView.ParamServices.CameraSize - 5.0f);
+			}
+
+			var pos = new Vector3(this.transform.position.x, posY, this.transform.position.z);
+
+			Fruit2DData fruitData = new(pos);
 			fruitData.FruitPoint = fruitPoint;
 			fruitData.FruitIndex = fruitIndex;
 			return fruitData;
