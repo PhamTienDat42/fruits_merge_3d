@@ -9,7 +9,7 @@ namespace GamePlay
 		[SerializeField] private GameView gameView;
 
 		private bool isColliding = false;
-		private readonly float collisionDuration = 3f;
+		private readonly float collisionDuration = 2.0f;
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
@@ -37,6 +37,7 @@ namespace GamePlay
 				if (Time.time - startTime > collisionDuration)
 				{
 					Logger.Debug("GameOverrrrrrrrrrrrr");
+					gameView.PlayGameOverSfx();
 					controller.GameOver();
 					yield break;
 				}
