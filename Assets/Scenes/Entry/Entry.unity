@@ -370,6 +370,9 @@ MonoBehaviour:
   - Name: ButtonSfx
     AudioClip: {fileID: 8300000, guid: 37d63b68fae13c046a09f18368696cd7, type: 3}
     Volume: 1
+  - Name: KnifeSfx
+    AudioClip: {fileID: 8300000, guid: 8fda50e492febae43b0dbaaffcd4e3f4, type: 3}
+    Volume: 1
 --- !u!1001 &968131858
 PrefabInstance:
   m_ObjectHideFlags: 0

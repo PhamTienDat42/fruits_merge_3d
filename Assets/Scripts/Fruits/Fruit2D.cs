@@ -122,6 +122,7 @@ namespace Fruits
 		{
 			if(gameController.IsClickable == false && gameController.IsKnife == true)
 			{
+				gameView.PlayCutBallSfx();
 				this.gameObject.SetActive(false);
 				gameController.IsKnife = false;
 				gameController.IsClickable = true;

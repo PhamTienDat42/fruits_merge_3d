@@ -41,4 +41,5 @@ public class Constants
 	public const string LoseSfxName = "LoseSfx";
 	public const string ButtonSfxName = "ButtonSfx";
 	public const string CollisionSfxName = "CollisionSfx";
+	public const string CutBallSfxName = "KnifeSfx";
 }

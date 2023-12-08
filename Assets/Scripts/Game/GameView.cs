@@ -1,3 +1,4 @@
+using System;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -118,6 +119,16 @@ namespace Game
 		{
 			gameController.IsClickable = false;
 			gameController.IsKnife = true;
+		}
+
+		public void PlayGameOverSfx()
+		{
+			audioService.PlaySfx(Constants.LoseSfxName);
+		}
+
+		public void PlayCutBallSfx()
+		{
+			audioService.PlaySfx(Constants.CutBallSfxName);
 		}
 
 		public ParamServices ParamServices => paramServices;

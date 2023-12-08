@@ -400,6 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a016b4705b25684697ff81c80a6b25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 855452041}
   confirmButtonTMP: {fileID: 2066772030}
   highScoreTMP: {fileID: 6638103230028894342}
 --- !u!1001 &1791066561
