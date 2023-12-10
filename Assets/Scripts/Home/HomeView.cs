@@ -32,6 +32,7 @@ namespace Home
 			audioService.MusicOn = playerServices.Sound;
 			audioService.VibrateOn = playerServices.Haptic;
 
+			paramServices.CameraSize = Constants.DesignCamSize;
 			ShowToggleValueStart();
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
 		}
