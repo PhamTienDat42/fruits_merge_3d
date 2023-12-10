@@ -22,7 +22,9 @@ public class Constants
 	public const string WatermelonCount = "wtc";
 	public const string OldScore = "oscr";
 
+	// setup
 	public const int FruitTypeCount = 11;
+	public const float DesignCamSize = 5.0f;
 
 	//Animation
 	public const string ToggleIsOn = "IsOn";
