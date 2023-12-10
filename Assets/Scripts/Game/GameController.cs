@@ -109,7 +109,7 @@ namespace Game
 			//KnifeBooster
 			if (isKnife == true && isClickable == false)
 			{
-				CutBallWithKnifeBooster();
+				StartCoroutine(ICutBallWithKnifeBooster());
 			}
 
 			//Game
@@ -329,7 +329,7 @@ namespace Game
 			return pos;
 		}
 
-		public void CutBallWithKnifeBooster()
+		public IEnumerator ICutBallWithKnifeBooster()
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
@@ -338,10 +338,11 @@ namespace Game
 
 				if (hit.collider != null)
 				{
+					hit.collider.gameObject.SetActive(false);
 					gameView.PlayCutBallSfx();
 					isKnife = false;
+					yield return new WaitForSeconds(0.5f);
 					isClickable = true;
-					hit.collider.gameObject.SetActive(false);
 				}
 			}
 		}
