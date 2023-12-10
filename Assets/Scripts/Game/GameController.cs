@@ -52,7 +52,6 @@ namespace Game
 		private float fruitLocalscaleX = 0.0f;
 
 		private ParamServices paramServices;
-		private readonly float DesignCamSize = 5.0f;
 
 		private void Awake()
 		{
@@ -74,7 +73,7 @@ namespace Game
 		{
 			isClickable = true;
 
-			if (paramServices.CameraSize != 0.0f)
+			if (paramServices.CameraSize != Constants.DesignCamSize)
 			{
 				mainCamera.orthographicSize = paramServices.CameraSize;
 			}
@@ -312,17 +311,17 @@ namespace Game
 			var posY = fruitPos.y;
 			var posX = fruitPos.x;
 
-			if (paramServices.CameraSize != 0.0f)
+			if (paramServices.CameraSize != Constants.DesignCamSize)
 			{
-				posY += paramServices.CameraSize - DesignCamSize;
+				posY += paramServices.CameraSize - Constants.DesignCamSize;
 
 				if (posX > 0.0f)
 				{
-					posX -= (paramServices.CameraSize - DesignCamSize) * mainCamera.aspect;
+					posX -= (paramServices.CameraSize - Constants.DesignCamSize) * mainCamera.aspect;
 				}
 				else
 				{
-					posX += (paramServices.CameraSize - DesignCamSize) * mainCamera.aspect;
+					posX += (paramServices.CameraSize - Constants.DesignCamSize) * mainCamera.aspect;
 				}
 			}
 			var pos = new Vector3(posX, posY, fruitPos.z);

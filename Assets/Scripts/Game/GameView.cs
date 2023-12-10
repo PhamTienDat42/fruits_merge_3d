@@ -1,4 +1,3 @@
-using System;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -36,7 +35,7 @@ namespace Game
 				currentScore.text = $"{PlayerPrefs.GetInt(Constants.OldScore, 0)}";
 			}
 
-			zoomOutButton.interactable = paramServices.CameraSize == 0.0f;
+			zoomOutButton.interactable = paramServices.CameraSize == Constants.DesignCamSize;
 		}
 
 		public void UpdateCurrentScore()

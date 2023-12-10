@@ -35,7 +35,7 @@ namespace SettingPopup
 
 		private void Start()
 		{
-			if(paramServices.CameraSize != 0.0f)
+			if(paramServices.CameraSize != Constants.DesignCamSize)
 			{
 				mainCamera.orthographicSize = paramServices.CameraSize;
 			}
