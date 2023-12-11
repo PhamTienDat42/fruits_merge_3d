@@ -59,7 +59,6 @@ namespace Fruits
 			{
 				gameView.PlayMergeSfx();
 			}
-			OnFruitCombined?.Invoke(this);
 
 			var posA = this.transform.position;
 			var posB = otherFruit.transform.position;
@@ -82,8 +81,9 @@ namespace Fruits
 
 			//reset old fruit
 			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
+			OnFruitCombined?.Invoke(this);
+			this.gameObject.SetActive(false);
 
 			//max fruit index
 			if (fruitIndex == Constants.FruitTypeCount)
@@ -92,8 +92,8 @@ namespace Fruits
 			}
 
 			//show bonus score
-			var bonusPosY = UnityEngine.Random.Range(-0.25f, 0.25f);
-			var newBonusScorePos = new Vector3(newPos.x, newPos.y + bonusPosY, -5.0f);
+			var bonusPos = UnityEngine.Random.Range(-0.25f, 0.25f);
+			var newBonusScorePos = new Vector3(newPos.x + bonusPos, newPos.y + bonusPos, -5.0f);
 			fruitManager.ShowBonusScore(gameController.BonusScore, newBonusScorePos);
 
 			//var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);

@@ -116,7 +116,7 @@ namespace Game
 			{
 				DragFruits();
 			}
-#if UNITY_EDITOR
+
 			if (Input.GetKeyDown(KeyCode.Space) && isDrag == false)
 			{
 				isDrag = true;
@@ -126,9 +126,6 @@ namespace Game
 			{
 				isDrag = false;
 			}
-#elif UNITY_ANDROID
-
-#endif
 		}
 
 		private void DragFruits()
@@ -269,6 +266,7 @@ namespace Game
 
 		private void OnFruitCombined2(Fruit2D fruit)
 		{
+			Logger.Debug(fruit.name);
 			float elapsedTimeSinceCombine = Time.time - lastCombineTime;
 			fruitCombo = elapsedTimeSinceCombine < isComboTime ? ++fruitCombo : 0;
 			IncreaseScore(fruit.FruitPoint);
