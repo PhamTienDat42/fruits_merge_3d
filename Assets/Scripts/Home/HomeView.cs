@@ -1,7 +1,6 @@
 using Services;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utilities;
 
@@ -21,17 +20,20 @@ namespace Home
 		private ParamServices paramServices;
 		private PlayerServices playerServices;
 		private AudioService audioService;
+		private TransitionService transitionService;
 
 		private void Start()
 		{
 			paramServices = homeController.GameServices.GetService<ParamServices>();
 			playerServices = homeController.GameServices.GetService<PlayerServices>();
 			audioService = homeController.GameServices.GetService<AudioService>();
+			transitionService = homeController.GameServices.GetService<TransitionService>();
 
 			audioService.SoundOn = playerServices.Effect;
 			audioService.MusicOn = playerServices.Sound;
 			audioService.VibrateOn = playerServices.Haptic;
 
+			transitionService.PlayStartTransition();
 			paramServices.CameraSize = Constants.DesignCamSize;
 			ShowToggleValueStart();
 			highScoreTMP.text = $"{PlayerPrefs.GetInt(Constants.HighScore, 0)}";
@@ -42,7 +44,8 @@ namespace Home
 			PlayButtonSfx();
 			Time.timeScale = 1.0f;
 			paramServices.IsContinue = false;
-			SceneManager.LoadScene(Constants.GameScene);
+			transitionService.PlayEndTransition(Constants.GameScene);
+			//SceneManager.LoadScene(Constants.GameScene);
 		}
 
 		public void OnBilliardThemeButtonClick()
@@ -68,7 +71,8 @@ namespace Home
 			PlayButtonSfx();
 			Time.timeScale = 1.0f;
 			paramServices.IsContinue = true;
-			SceneManager.LoadScene(Constants.GameScene);
+			transitionService.PlayEndTransition(Constants.GameScene);
+			//SceneManager.LoadScene(Constants.GameScene);
 		}
 
 		public void OnRankingButtonClick()

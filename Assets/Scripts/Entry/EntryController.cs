@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Audio;
 using Services;
+using TransitionNS;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ namespace Entry
 	public class EntryController : MonoBehaviour
 	{
 		[SerializeField] private EntryModel entryModel;
+		[SerializeField] private Transition transition;
 		[SerializeField] private Music music;
 		[SerializeField] private List<Sound> sounds;
 
@@ -26,12 +28,14 @@ namespace Entry
 			}
 
 			DontDestroyOnLoad(music.gameObject);
+			DontDestroyOnLoad(transition.gameObject);
 			GameObject soundObject = new(Constants.SoundObjectName);
 			DontDestroyOnLoad(soundObject);
 
 			gameServices.AddService(new PlayerServices());
 			gameServices.AddService(new ParamServices());
 			gameServices.AddService(new AudioService(music, sounds, soundObject));
+			gameServices.AddService(new TransitionService(transition));
 
 			//---------------------GetServices----------------------------------------
 			var playerService = gameServices.GetService<PlayerServices>();

@@ -353,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entryModel: {fileID: 341043014}
+  transition: {fileID: 686768285}
   music: {fileID: 2014928411}
   sounds:
   - Name: DropSfx
@@ -373,6 +374,74 @@ MonoBehaviour:
   - Name: KnifeSfx
     AudioClip: {fileID: 8300000, guid: 8fda50e492febae43b0dbaaffcd4e3f4, type: 3}
     Volume: 1
+--- !u!1001 &686768284
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 902036399245448207, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_Name
+      value: Transition
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2322564206889462969, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+--- !u!114 &686768285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 208124919711870128, guid: b00c4bc4d8247044cab42b2a2a963bbd, type: 3}
+  m_PrefabInstance: {fileID: 686768284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a18e26eac8b2484597076b36a016044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &968131858
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ namespace SettingPopup
 
 		private ParamServices paramServices;
 		private AudioService audioService;
+		private TransitionService transitionService;
 
 		private event Action OnConfirmButtonClicked;
 
@@ -26,6 +27,7 @@ namespace SettingPopup
 				var gameServices = gameServiceObj.GetComponent<GameServices>();
 				paramServices = gameServices.GetService<ParamServices>();
 				audioService = gameServices.GetService<AudioService>();
+				transitionService = gameServices.GetService<TransitionService>();
 			}
 			else
 			{
@@ -79,7 +81,7 @@ namespace SettingPopup
 		{
 			Time.timeScale = 1.0f;
 			audioService.PlaySfx(Constants.ButtonSfxName);
-			SceneManager.LoadScene(Constants.HomeScene);
+			transitionService.PlayEndTransition(Constants.HomeScene);
 		}
 
 		public void OnRankingButtonClick()

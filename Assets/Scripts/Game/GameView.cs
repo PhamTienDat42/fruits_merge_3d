@@ -1,3 +1,5 @@
+using System.Collections;
+using Pools;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -10,8 +12,10 @@ namespace Game
 	public class GameView : MonoBehaviour
 	{
 		[SerializeField] private GameController gameController;
+		[SerializeField] private FruitManager fruitManager;
 		[SerializeField] private GameModel gameModel;
 		[SerializeField] private ParticleSystem mergeParticle;
+		[SerializeField] private ParticleSystem explosionParticles;
 		[SerializeField] private Camera mainCamera;
 
 		[Space(8.0f)]
@@ -24,17 +28,19 @@ namespace Game
 
 		private ParamServices paramServices;
 		private AudioService audioService;
+		private TransitionService transitionService;
 
 		private void Start()
 		{
 			paramServices = gameController.GameServices.GetService<ParamServices>();
 			audioService = gameController.GameServices.GetService<AudioService>();
+			transitionService = gameController.GameServices.GetService<TransitionService>();
 
 			if (paramServices.IsContinue == true)
 			{
 				currentScore.text = $"{PlayerPrefs.GetInt(Constants.OldScore, 0)}";
 			}
-
+			transitionService.PlayStartTransition();
 			zoomOutButton.interactable = paramServices.CameraSize == Constants.DesignCamSize;
 		}
 
@@ -100,10 +106,12 @@ namespace Game
 			gameController.BoolShake = true;
 		}
 
-		public void PlayMergeParticle(float xParticle, float yParticle)
+		public void PlayMergeParticle(float xParticle, float yParticle, int multiplyNum)
 		{
 			mergeParticle.gameObject.SetActive(true);
 			mergeParticle.transform.position = new Vector3(xParticle, yParticle, -2.0f);
+			var scaleNum = 0.25f + 0.15f * multiplyNum;
+			mergeParticle.transform.localScale = new Vector3(scaleNum, scaleNum, scaleNum);
 			mergeParticle.Play();
 		}
 
@@ -111,7 +119,17 @@ namespace Game
 		{
 			paramServices.CameraSize = mainCamera.orthographicSize * 1.25f;
 			paramServices.IsContinue = true;
-			SceneManager.LoadScene(Constants.GameScene);
+			StartCoroutine(IPlayExplosionParticleTransition());
+		}
+
+		private IEnumerator IPlayExplosionParticleTransition()
+		{
+			transitionService.PlayEndTransition(Constants.GameScene);
+			explosionParticles.gameObject.SetActive(true);
+			explosionParticles.Play();
+			yield return new WaitForSeconds(0.25f);
+			fruitManager.ReturnToPool();
+			//SceneManager.LoadScene(Constants.GameScene);
 		}
 
 		public void OnKnifeBoosterClick()
