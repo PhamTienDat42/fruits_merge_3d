@@ -85,7 +85,7 @@ namespace Pools
 			randomStartScores.AddRange(randomScores);
 
 			paramServices = gameController.GameServices.GetService<ParamServices>();
-			if(paramServices.IsContinue == true)
+			if (paramServices.IsContinue == true)
 			{
 				gameModel.CurrentScore = PlayerPrefs.GetInt(Constants.OldScore, 0);
 				LoadCombinePool();
@@ -141,7 +141,7 @@ namespace Pools
 		{
 			var bonusScore = GetNewBonusScoreForShow(pos);
 			bonusScore.text = $"+{num}";
-			var bonusPos = new Vector3(pos.x, pos.y+1.0f, pos.z);
+			var bonusPos = new Vector3(pos.x, pos.y + 1.0f, pos.z);
 			bonusScore.transform.DOMove(bonusPos, 1.0f);
 			yield return new WaitForSeconds(1.0f);
 			bonusScore.gameObject.SetActive(false);
@@ -178,6 +178,17 @@ namespace Pools
 			Transform childTranform = combineFruit.GetComponent<Transform>().GetChild(0);
 			StartCoroutine(RandomRotateFruits(childTranform, 3.0f));
 			return combineFruit;
+		}
+
+		private IEnumerator IGetCombineFruit(int index, Vector3 pos)
+		{
+			yield return null;
+			var newFruit = GetFruitForDrop(index, pos);
+		}
+
+		public void GetNewCombineFruit(int index, Vector3 pos)
+		{
+			StartCoroutine(IGetCombineFruit(index, pos));
 		}
 
 		public Fruit2D GetFruitForContinue(int index)
@@ -229,7 +240,7 @@ namespace Pools
 			{
 				Fruit2DData fruitData = fruit.ToData();
 
-				if(fruit.gameObject.activeSelf == true)
+				if (fruit.gameObject.activeSelf == true)
 				{
 					fruitDataList.Add(fruitData);
 				}
@@ -266,6 +277,17 @@ namespace Pools
 			LoadFruitPoolJson();
 		}
 
+		public void ReturnToPool()
+		{
+			foreach (var pool in combinePools)
+			{
+				foreach (Fruit2D fruit in pool.Value.GetObjectList())
+				{
+					fruit.gameObject.SetActive(false);
+				}
+			}
+		}
+
 		//Shake Phone
 		public void ApplyShakeForce()
 		{
@@ -273,7 +295,7 @@ namespace Pools
 			Vector2 shakeForce = shakeDirection * this.shakeForce;
 			var rigidList = new List<Rigidbody2D>();
 
-			foreach(var pool in combinePools)
+			foreach (var pool in combinePools)
 			{
 				foreach (var fruit in pool.Value.GetObjectList())
 				{

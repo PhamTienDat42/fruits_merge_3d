@@ -51,7 +51,7 @@ namespace Fruits
 
 		private void CombineFruit(Fruit2D otherFruit)
 		{
-			if(fruitManager.BilliardThemeIndex == true)
+			if (fruitManager.BilliardThemeIndex == true)
 			{
 				gameView.PlayBilliardMergeSfx();
 			}
@@ -61,35 +61,44 @@ namespace Fruits
 			}
 			OnFruitCombined?.Invoke(this);
 
-			var higherFruit = (transform.position.y > otherFruit.transform.position.y) ? this : otherFruit;
-			var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
-			var newFruitPos = higherFruit.transform.position;
+			var posA = this.transform.position;
+			var posB = otherFruit.transform.position;
+			var newPos = new Vector3((posA.x + posB.x) / 2f, (posA.y + posB.y) / 2f, (posA.x + posB.x) / 2f);
+			//var higherFruit = (transform.position.y < otherFruit.transform.position.y) ? this : otherFruit;
+
+			//var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
+			//var newFruitPos = higherFruit.transform.position;
 			var newIndex = fruitIndex + 1;
 
+			//Play particles
 			var yParticle = (transform.position.y + otherFruit.transform.position.y) / 2.0f;
 			var xParticle = (transform.position.x + otherFruit.transform.position.x) / 2.0f;
-			gameView.PlayMergeParticle(xParticle, yParticle);
+			gameView.PlayMergeParticle(xParticle, yParticle, fruitIndex);
 
 			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
 			{
 				return;
 			}
 
+			//reset old fruit
 			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-
 			this.gameObject.SetActive(false);
 			otherFruit.gameObject.SetActive(false);
 
+			//max fruit index
 			if (fruitIndex == Constants.FruitTypeCount)
 			{
 				return;
 			}
 
-			var newBonusScorePos = new Vector3(newFruitPos.x - 0.2f, newFruitPos.y, -5.0f);
+			//show bonus score
+			var bonusPosY = UnityEngine.Random.Range(-0.25f, 0.25f);
+			var newBonusScorePos = new Vector3(newPos.x, newPos.y + bonusPosY, -5.0f);
 			fruitManager.ShowBonusScore(gameController.BonusScore, newBonusScorePos);
 
-			var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
-			newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
+			//var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
+			fruitManager.GetNewCombineFruit(newIndex, newPos);
+			//newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
 		}
 
 		private void OnDisable()
