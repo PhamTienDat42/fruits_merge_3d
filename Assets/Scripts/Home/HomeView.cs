@@ -90,14 +90,14 @@ namespace Home
 
 		public void OnSfxToggleValueChanged()
 		{
-			PlayButtonSfx() ;
+			PlayButtonSfx();
 			playerServices.Effect = !sfxToggle.isOn;
 			audioService.SoundOn = !sfxToggle.isOn;
 		}
 
 		public void OnHapticToggleValueChanged()
 		{
-			PlayButtonSfx() ;
+			PlayButtonSfx();
 			playerServices.Haptic = !hapticToggle.isOn;
 			audioService.VibrateOn = !hapticToggle.isOn;
 		}

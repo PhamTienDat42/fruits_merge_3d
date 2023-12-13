@@ -13,7 +13,7 @@ namespace Fruits
 		private GameController gameController;
 		private GameView gameView;
 		private GameModel gameModel;
-		private FruitManager fruitManager;
+		private FruitPoolManager fruitManager;
 		private Rigidbody2D rb;
 
 		public event Action<Fruit2D> OnFruitCombined;
@@ -23,7 +23,7 @@ namespace Fruits
 			rb = GetComponent<Rigidbody2D>();
 		}
 
-		public void InstantiateFruits(FruitManager fruitManager, GameController gameController, GameView gameView, GameModel gameModel)
+		public void InstantiateFruits(FruitPoolManager fruitManager, GameController gameController, GameView gameView, GameModel gameModel)
 		{
 			this.fruitManager = fruitManager;
 			this.gameController = gameController;
@@ -39,17 +39,43 @@ namespace Fruits
 			{
 				if (CanCombine(otherFruit))
 				{
-					CombineFruit(otherFruit);
+					CombineBall(otherFruit);
 				}
 			}
 		}
 
 		private bool CanCombine(Fruit2D otherFruit)
 		{
-			return fruitPoint == otherFruit.fruitPoint;
+			return fruitIndex == otherFruit.fruitIndex;
 		}
 
-		private void CombineFruit(Fruit2D otherFruit)
+		private void CombineBall(Fruit2D otherFruit)
+		{
+			OnFruitCombined?.Invoke(this);
+			var newCombineBallPos = SetCombineBallBetweenPosition(this.transform.position, otherFruit.transform.position);
+			var particlePosition = new Vector3(newCombineBallPos.x, newCombineBallPos.y, -5.0f);
+
+			gameView.PlayMergeParticle(particlePosition, fruitIndex);
+			PlayMergeSfx();
+
+			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
+			{
+				return;
+			}
+
+			ReturnOldBallsToPool(this, otherFruit);
+
+			ShowBonusScoreOn(newCombineBallPos);
+
+			if (fruitIndex == Constants.MaxFruitType)
+			{
+				return;
+			}
+
+			fruitManager.GetNewCombineBall(fruitIndex + 1, newCombineBallPos);
+		}
+
+		private void PlayMergeSfx()
 		{
 			if (fruitManager.BilliardThemeIndex == true)
 			{
@@ -59,46 +85,25 @@ namespace Fruits
 			{
 				gameView.PlayMergeSfx();
 			}
+		}
 
-			var posA = this.transform.position;
-			var posB = otherFruit.transform.position;
-			var newPos = new Vector3((posA.x + posB.x) / 2f, (posA.y + posB.y) / 2f, (posA.x + posB.x) / 2f);
-			//var higherFruit = (transform.position.y < otherFruit.transform.position.y) ? this : otherFruit;
+		private Vector3 SetCombineBallBetweenPosition(Vector3 currentPos, Vector3 otherPos)
+		{
+			return new Vector3((currentPos.x + otherPos.x) / 2f, (currentPos.y + otherPos.y) / 2f, (currentPos.x + otherPos.x) / 2f);
+		}
 
-			//var newVelocity = higherFruit.gameObject.GetComponent<Rigidbody2D>().velocity;
-			//var newFruitPos = higherFruit.transform.position;
-			var newIndex = fruitIndex + 1;
-
-			//Play particles
-			var yParticle = (transform.position.y + otherFruit.transform.position.y) / 2.0f;
-			var xParticle = (transform.position.x + otherFruit.transform.position.x) / 2.0f;
-			gameView.PlayMergeParticle(xParticle, yParticle, fruitIndex);
-
-			if (!gameObject.activeSelf && !otherFruit.gameObject.activeSelf)
-			{
-				return;
-			}
-
-			//reset old fruit
-			this.rb.velocity = otherFruit.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-			otherFruit.gameObject.SetActive(false);
-			OnFruitCombined?.Invoke(this);
-			this.gameObject.SetActive(false);
-
-			//max fruit index
-			if (fruitIndex == Constants.FruitTypeCount)
-			{
-				return;
-			}
-
-			//show bonus score
+		private void ShowBonusScoreOn(Vector3 newCombineBallPos)
+		{
 			var bonusPos = UnityEngine.Random.Range(-0.25f, 0.25f);
-			var newBonusScorePos = new Vector3(newPos.x + bonusPos, newPos.y + bonusPos, -5.0f);
+			var newBonusScorePos = new Vector3(newCombineBallPos.x + bonusPos, newCombineBallPos.y + bonusPos, -5.0f);
 			fruitManager.ShowBonusScore(gameController.BonusScore, newBonusScorePos);
+		}
 
-			//var newFruit = fruitManager.GetFruitForDrop(newIndex, newFruitPos);
-			fruitManager.GetNewCombineFruit(newIndex, newPos);
-			//newFruit.GetComponent<Rigidbody2D>().velocity = newVelocity;
+		private void ReturnOldBallsToPool(Fruit2D currentBall, Fruit2D otherBall)
+		{
+			currentBall.rb.velocity = otherBall.gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+			currentBall.gameObject.SetActive(false);
+			otherBall.gameObject.SetActive(false);
 		}
 
 		private void OnDisable()
@@ -108,7 +113,7 @@ namespace Fruits
 
 		public Fruit2DData ToData()
 		{
-			var posF = gameController.ReturnFruitPositionOnZoomOutBooster(this.transform.position);
+			var posF = gameController.ReturnBallPositionOnZoomOutBooster(this.transform.position);
 
 			Fruit2DData fruitData = new(posF)
 			{

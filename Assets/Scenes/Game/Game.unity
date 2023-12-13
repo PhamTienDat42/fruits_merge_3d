@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 196975151}
   m_Layer: 0
-  m_Name: PoolForDrag
+  m_Name: PoolNoPhysic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2111,7 +2111,7 @@ GameObject:
   - component: {fileID: 1593492359}
   - component: {fileID: 1593492360}
   m_Layer: 0
-  m_Name: '@FruitManager'
+  m_Name: '@FruitPoolManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2144,32 +2144,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dab22ec186dec44bcbfb86951b85f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 996970116}
+  gameView: {fileID: 468249503}
+  gameModel: {fileID: 455688608}
   ballTypes: {fileID: 11400000, guid: bd5f2b875547734428aa14e19972189a, type: 2}
   ballTypesNoPhysic: {fileID: 11400000, guid: e804febbda3b8274db97dbd717a04134, type: 2}
-  fruitPrefabs:
-  - {fileID: 1542152104260969041, guid: 2a20ec416f1633d4594c9d6ba1d81ec5, type: 3}
-  - {fileID: 3387677265620705566, guid: 79b2b9f41fee34e4e9be211c6bea83ca, type: 3}
-  - {fileID: 967975879500142936, guid: 008c9a479858e994ba3a21c42f7ae446, type: 3}
-  - {fileID: 4075796002961383475, guid: ab5c02b355230324eba03552d837cd52, type: 3}
-  - {fileID: 4386942527320817549, guid: eef2de34123eec1449571d51fddbe603, type: 3}
-  - {fileID: 3598034664052629804, guid: 3d76d8ac7b7e06547b73d46bdb28cd98, type: 3}
-  - {fileID: 8172911621956767283, guid: c47ad50a48c9a724cb8ebf13fcc8b2a6, type: 3}
-  - {fileID: 2492741908635247158, guid: 27c49998e176fa1499e2d5ec690c9728, type: 3}
-  - {fileID: 3968127464327318410, guid: 94fc6a69c79b98f49ba34bc7acd5bc19, type: 3}
-  - {fileID: 1243907565351160133, guid: 3ce07271edde45e49b2b333566ab0fb8, type: 3}
-  - {fileID: 4076720875364383185, guid: fa3ba74c64eb929468b6e7af743b8e79, type: 3}
-  combineFruitPrefabs:
-  - {fileID: 2555542449938449490, guid: 2c8f22751ed30d04fa93f6cc339b1cce, type: 3}
-  - {fileID: 3805673527762171233, guid: 2e3cada553c2c894f958486cbe7d03ea, type: 3}
-  - {fileID: 4387267933583684301, guid: aa7625acd013ec34f9fbf3778bb2664b, type: 3}
-  - {fileID: 5878095819288365841, guid: cac5e4a7daae9e740a354b6c68d98495, type: 3}
-  - {fileID: 2292323052021268528, guid: 50a8bc4e92fe87c46a0cf559e907316b, type: 3}
-  - {fileID: 2388700446658253311, guid: 1c42d71767d5b9a4490b49f4b491ec9f, type: 3}
-  - {fileID: 1454833808609690705, guid: afa21958dce583b46a5b4e373aef5f20, type: 3}
-  - {fileID: 5753836070195785350, guid: c4983505efbe9a24ba548c1c1a2cfa9e, type: 3}
-  - {fileID: 3093619453907322305, guid: d55b43198e52425449589de37dd72f28, type: 3}
-  - {fileID: 9015710020337790960, guid: 9699af84eb5645f43b61d91613feaf7d, type: 3}
-  - {fileID: 8523204593812370289, guid: 9f6d102220bfaac4e8062d9376dcec4f, type: 3}
+  ballNoPhysicPrefabs: []
+  ballPhysicPrefabs: []
   bonusScoreTMPPrefabs:
   - {fileID: 91429698264051396, guid: d97cc26e1c08dad448843bed09ac2283, type: 3}
   - {fileID: 91429698264051396, guid: d97cc26e1c08dad448843bed09ac2283, type: 3}
@@ -2182,14 +2163,11 @@ MonoBehaviour:
   - {fileID: 91429698264051396, guid: d97cc26e1c08dad448843bed09ac2283, type: 3}
   - {fileID: 91429698264051396, guid: d97cc26e1c08dad448843bed09ac2283, type: 3}
   - {fileID: 91429698264051396, guid: d97cc26e1c08dad448843bed09ac2283, type: 3}
-  parentFruitPools: {fileID: 196975150}
-  parentFruitCombinePools: {fileID: 1679223675}
-  parentBonusScorePools: {fileID: 828374548}
-  gameController: {fileID: 996970116}
-  gameView: {fileID: 468249503}
-  gameModel: {fileID: 455688608}
   randomScores: 640000005000000041000000280000000f000000
   bonusRandomScores: 000000000000000000000000050000000a000000
+  parentBallNoPhysic: {fileID: 196975150}
+  parentBallPhysics: {fileID: 1679223675}
+  parentBonusScorePools: {fileID: 828374548}
 --- !u!1 &1679223675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,7 +2178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1679223676}
   m_Layer: 0
-  m_Name: PoolForMerge
+  m_Name: PoolPhysic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,7 +13,7 @@ namespace Game
 	public class GameController : MonoBehaviour
 	{
 		[SerializeField] private Camera mainCamera;
-		[SerializeField] private FruitManager fruitManager;
+		[SerializeField] private FruitPoolManager fruitManager;
 		[SerializeField] private GameModel gameModel;
 		[SerializeField] private GameView gameView;
 
@@ -81,17 +81,17 @@ namespace Game
 			GetDistanceToShowBall();
 			var startY = mainCamera.orthographicSize - fruitMesh.bounds.size.y * fruitForDistanceTransform.localScale.x * fruitLocalscaleX / 1.5f;
 			startPos = new Vector3(0f, startY, 0f);
-			nextFruit = fruitManager.GetNewFruitForShow(startPos);
+			nextFruit = fruitManager.GetNewBallNoPhysicOn(startPos);
 			SetBoxBound2D(mainCamera);
 			ScaleBackground(bgSpriteRenderer);
 			groundObject.transform.localPosition = new Vector3(0.0f, -mainCamera.orthographicSize, 0.0f);
 
-			fruitManager.OnFruitCombinedFromPool += OnFruitCombined2;
+			fruitManager.OnFruitCombinedFromPool += OnFruitCombined;
 		}
 
 		private void GetDistanceToShowBall()
 		{
-			var lastFruit = fruitManager.FruitPrefabs[^1];
+			var lastFruit = fruitManager.GetLastBallFromPrefabs();
 			fruitMesh = lastFruit.GetComponentInChildren<MeshFilter>().sharedMesh;
 			fruitForDistanceTransform = lastFruit.GetComponent<Transform>().GetChild(0);
 			fruitLocalscaleX = lastFruit.GetComponent<Transform>().localScale.x;
@@ -202,8 +202,8 @@ namespace Game
 				var newPosX = Random.Range(-2f, 2f);
 				var newPos = new Vector3(newPosX, startPos.y, 0f);
 				nextFruit.gameObject.SetActive(false);
-				fruitManager.GetFruitForDrop(nextFruit.FruitIndex, newPos);
-				nextFruit = fruitManager.GetNewFruitForShow(startPos);
+				fruitManager.GetNewPhysicBallHas(nextFruit.FruitIndex, newPos);
+				nextFruit = fruitManager.GetNewBallNoPhysicOn(startPos);
 			}
 		}
 
@@ -223,10 +223,10 @@ namespace Game
 			gameView.PlayDropSfx();
 			isClickable = false;
 			nextFruit.gameObject.SetActive(false);
-			fruitManager.GetFruitForDrop(nextFruit.FruitIndex, pos);
+			fruitManager.GetNewPhysicBallHas(nextFruit.FruitIndex, pos);
 			yield return new WaitForSeconds(1.5f);
 			fruitManager.SaveCombinePool();
-			nextFruit = fruitManager.GetNewFruitForShow(startPos);
+			nextFruit = fruitManager.GetNewBallNoPhysicOn(startPos);
 			isClickable = true;
 		}
 
@@ -246,31 +246,36 @@ namespace Game
 			collider2D.transform.localPosition = localPos;
 		}
 
-		public void IncreaseScore(int fruitPoint)
+		private void OnFruitCombined(Fruit2D fruit)
 		{
-			if (fruitCombo > 9)
-			{
-				fruitCombo = 9;
-			}
+			float elapsedTimeSinceCombine = Time.time - lastCombineTime;
+			fruitCombo = elapsedTimeSinceCombine < isComboTime ? ++fruitCombo : 0;
+			fruitCombo = fruitCombo > 9 ? 9 : fruitCombo;
+			IncreaseScore(fruit.FruitPoint);
+			lastCombineTime = Time.time;
+		}
+
+		private void IncreaseScore(int fruitPoint)
+		{
 			BonusScore = Mathf.CeilToInt(fruitPoint * fruitComboIndex[fruitCombo]);
 			gameModel.CurrentScore += BonusScore;
 			PlayerPrefs.SetInt(Constants.OldScore, gameModel.CurrentScore);
-			var highScore = PlayerPrefs.GetInt(Constants.HighScore, 0);
-			if (gameModel.CurrentScore > highScore)
+			CheckAndSaveHighScore();
+			gameView.UpdateCurrentScore();
+		}
+
+		private void CheckAndSaveHighScore()
+		{
+			if (IsHighScore() == true)
 			{
 				PlayerPrefs.SetInt(Constants.HighScore, gameModel.CurrentScore);
 			}
 			PlayerPrefs.Save();
-			gameView.UpdateCurrentScore();
 		}
 
-		private void OnFruitCombined2(Fruit2D fruit)
+		private bool IsHighScore()
 		{
-			Logger.Debug(fruit.name);
-			float elapsedTimeSinceCombine = Time.time - lastCombineTime;
-			fruitCombo = elapsedTimeSinceCombine < isComboTime ? ++fruitCombo : 0;
-			IncreaseScore(fruit.FruitPoint);
-			lastCombineTime = Time.time;
+			return gameModel.CurrentScore > PlayerPrefs.GetInt(Constants.HighScore, 0);
 		}
 
 		private void ScaleBackground(SpriteRenderer bgSpiteRenderer)
@@ -299,12 +304,12 @@ namespace Game
 		{
 			boolShake = false;
 			topCollider.isTrigger = false;
-			fruitManager.ApplyShakeForce();
+			fruitManager.ApplyShakeForceToPoolBall();
 			yield return new WaitForSeconds(2.0f);
 			topCollider.isTrigger = true;
 		}
 
-		public Vector3 ReturnFruitPositionOnZoomOutBooster(Vector3 fruitPos)
+		public Vector3 ReturnBallPositionOnZoomOutBooster(Vector3 fruitPos)
 		{
 			var posY = fruitPos.y;
 			var posX = fruitPos.x;
@@ -312,15 +317,8 @@ namespace Game
 			if (paramServices.CameraSize != Constants.DesignCamSize)
 			{
 				posY += paramServices.CameraSize - Constants.DesignCamSize;
-
-				if (posX > 0.0f)
-				{
-					posX -= (paramServices.CameraSize - Constants.DesignCamSize) * mainCamera.aspect;
-				}
-				else
-				{
-					posX += (paramServices.CameraSize - Constants.DesignCamSize) * mainCamera.aspect;
-				}
+				var bonusPosX = (paramServices.CameraSize - Constants.DesignCamSize) * mainCamera.aspect;
+				posX += posX > 0.0f ? -bonusPosX : bonusPosX;
 			}
 			var pos = new Vector3(posX, posY, fruitPos.z);
 			return pos;

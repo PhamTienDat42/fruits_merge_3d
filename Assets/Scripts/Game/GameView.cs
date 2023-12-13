@@ -12,7 +12,7 @@ namespace Game
 	public class GameView : MonoBehaviour
 	{
 		[SerializeField] private GameController gameController;
-		[SerializeField] private FruitManager fruitManager;
+		[SerializeField] private FruitPoolManager fruitManager;
 		[SerializeField] private GameModel gameModel;
 		[SerializeField] private ParticleSystem mergeParticle;
 		[SerializeField] private ParticleSystem explosionParticles;
@@ -106,10 +106,10 @@ namespace Game
 			gameController.BoolShake = true;
 		}
 
-		public void PlayMergeParticle(float xParticle, float yParticle, int multiplyNum)
+		public void PlayMergeParticle(Vector3 position, int multiplyNum)
 		{
 			mergeParticle.gameObject.SetActive(true);
-			mergeParticle.transform.position = new Vector3(xParticle, yParticle, -2.0f);
+			mergeParticle.transform.position = position;
 			var scaleNum = 0.25f + 0.15f * multiplyNum;
 			mergeParticle.transform.localScale = new Vector3(scaleNum, scaleNum, scaleNum);
 			mergeParticle.Play();

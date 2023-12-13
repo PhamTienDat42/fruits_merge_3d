@@ -36,11 +36,6 @@ namespace Entry
 			gameServices.AddService(new ParamServices());
 			gameServices.AddService(new AudioService(music, sounds, soundObject));
 			gameServices.AddService(new TransitionService(transition));
-
-			//---------------------GetServices----------------------------------------
-			var playerService = gameServices.GetService<PlayerServices>();
-			var audioService = gameServices.GetService<AudioService>();
-			// --------------------------- Audio ---------------------------------
 		}
 
 		private void Start()
